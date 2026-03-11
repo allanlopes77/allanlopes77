@@ -1,0 +1,1300 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Base Firme — Sistema 3P para Professoras de Yoga</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #F5F0E8;
+    --warm-white: #FAF7F2;
+    --terracotta: #C4724A;
+    --terracotta-light: #D9916E;
+    --terracotta-dark: #A35A35;
+    --sage: #6B7F5E;
+    --sage-light: #8A9E7C;
+    --sage-dark: #4A5C3F;
+    --forest: #2C3A28;
+    --clay: #8B6B52;
+    --gold: #B8943F;
+    --gold-light: #D4AF6A;
+    --text-dark: #1E2A1A;
+    --text-mid: #4A5240;
+    --text-light: #7A836E;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--warm-white);
+    color: var(--text-dark);
+    overflow-x: hidden;
+  }
+
+  /* ─── UTILITY ─── */
+  .reveal {
+    opacity: 0;
+    transform: translateY(32px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ─── TOP BAR ─── */
+  .topbar {
+    background: var(--forest);
+    color: var(--cream);
+    text-align: center;
+    padding: 10px 20px;
+    font-size: 13px;
+    letter-spacing: 0.08em;
+    font-weight: 300;
+  }
+  .topbar strong { color: var(--gold-light); }
+
+  /* ─── HERO ─── */
+  .hero {
+    background: var(--forest);
+    position: relative;
+    overflow: hidden;
+    padding: 100px 24px 80px;
+    text-align: center;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: 
+      radial-gradient(ellipse 80% 60% at 50% 0%, rgba(196,114,74,0.18) 0%, transparent 70%),
+      radial-gradient(ellipse 60% 40% at 20% 100%, rgba(107,127,94,0.15) 0%, transparent 60%);
+    pointer-events: none;
+  }
+
+  .hero-ornament {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    margin-bottom: 32px;
+  }
+
+  .hero-ornament-line {
+    width: 60px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold-light));
+  }
+  .hero-ornament-line.right {
+    background: linear-gradient(90deg, var(--gold-light), transparent);
+  }
+
+  .hero-ornament-icon {
+    width: 28px;
+    height: 28px;
+    opacity: 0.8;
+  }
+
+  .hero-label {
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--gold-light);
+    font-weight: 400;
+    margin-bottom: 20px;
+  }
+
+  .hero h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(36px, 6vw, 68px);
+    font-weight: 400;
+    line-height: 1.12;
+    color: var(--cream);
+    max-width: 820px;
+    margin: 0 auto 24px;
+  }
+
+  .hero h1 em {
+    font-style: italic;
+    color: var(--terracotta-light);
+  }
+
+  .hero-sub {
+    font-size: clamp(15px, 2vw, 18px);
+    color: rgba(245,240,232,0.72);
+    max-width: 620px;
+    margin: 0 auto 48px;
+    line-height: 1.7;
+    font-weight: 300;
+  }
+
+  .btn-hero {
+    display: inline-block;
+    background: var(--terracotta);
+    color: #fff;
+    text-decoration: none;
+    padding: 18px 48px;
+    font-size: 15px;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    border-radius: 2px;
+    transition: background 0.3s, transform 0.2s;
+    position: relative;
+  }
+
+  .btn-hero::after {
+    content: '';
+    position: absolute;
+    inset: -3px;
+    border: 1px solid rgba(196,114,74,0.4);
+    border-radius: 3px;
+    pointer-events: none;
+  }
+
+  .btn-hero:hover {
+    background: var(--terracotta-dark);
+    transform: translateY(-2px);
+  }
+
+  .hero-price-note {
+    margin-top: 16px;
+    font-size: 13px;
+    color: rgba(245,240,232,0.45);
+    letter-spacing: 0.04em;
+  }
+
+  /* ─── ESPELHO ─── */
+  .mirror {
+    background: var(--cream);
+    padding: 100px 24px;
+  }
+
+  .mirror-inner {
+    max-width: 680px;
+    margin: 0 auto;
+  }
+
+  .section-tag {
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--terracotta);
+    font-weight: 500;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .section-tag::before {
+    content: '';
+    width: 28px;
+    height: 1px;
+    background: var(--terracotta);
+  }
+
+  .mirror h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(28px, 4vw, 46px);
+    font-weight: 400;
+    line-height: 1.2;
+    color: var(--forest);
+    margin-bottom: 36px;
+  }
+
+  .mirror p {
+    font-size: 17px;
+    line-height: 1.85;
+    color: var(--text-mid);
+    margin-bottom: 20px;
+    font-weight: 300;
+  }
+
+  .mirror p strong {
+    color: var(--text-dark);
+    font-weight: 500;
+  }
+
+  .mirror-question {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 22px;
+    color: var(--forest);
+    border-left: 3px solid var(--terracotta);
+    padding-left: 20px;
+    margin: 36px 0;
+    line-height: 1.5;
+  }
+
+  /* ─── REFRAME ─── */
+  .reframe {
+    background: var(--forest);
+    padding: 100px 24px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .reframe::after {
+    content: '';
+    position: absolute;
+    right: -100px;
+    top: -100px;
+    width: 400px;
+    height: 400px;
+    border-radius: 50%;
+    border: 1px solid rgba(107,127,94,0.15);
+    pointer-events: none;
+  }
+
+  .reframe-inner {
+    max-width: 680px;
+    margin: 0 auto;
+  }
+
+  .reframe .section-tag { color: var(--sage-light); }
+  .reframe .section-tag::before { background: var(--sage-light); }
+
+  .reframe h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(28px, 4vw, 46px);
+    font-weight: 400;
+    line-height: 1.2;
+    color: var(--cream);
+    margin-bottom: 36px;
+  }
+
+  .reframe p {
+    font-size: 17px;
+    line-height: 1.85;
+    color: rgba(245,240,232,0.72);
+    margin-bottom: 20px;
+    font-weight: 300;
+  }
+
+  .reframe-highlight {
+    background: rgba(196,114,74,0.12);
+    border-left: 3px solid var(--terracotta);
+    padding: 24px 28px;
+    margin: 36px 0;
+    border-radius: 0 4px 4px 0;
+  }
+
+  .reframe-highlight p {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 22px;
+    color: var(--cream);
+    margin: 0;
+    line-height: 1.5;
+  }
+
+  /* ─── 3P PILLARS ─── */
+  .pillars {
+    background: var(--warm-white);
+    padding: 100px 24px;
+  }
+
+  .pillars-header {
+    text-align: center;
+    max-width: 600px;
+    margin: 0 auto 80px;
+  }
+
+  .pillars-header .section-tag {
+    justify-content: center;
+  }
+  .pillars-header .section-tag::before { display: none; }
+
+  .pillars-header h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(32px, 4vw, 52px);
+    font-weight: 400;
+    line-height: 1.2;
+    color: var(--forest);
+  }
+
+  .pillars-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2px;
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+
+  .pillar-card {
+    background: var(--cream);
+    padding: 52px 40px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .pillar-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+  }
+
+  .pillar-card:nth-child(1)::before { background: var(--terracotta); }
+  .pillar-card:nth-child(2)::before { background: var(--sage); }
+  .pillar-card:nth-child(3)::before { background: var(--gold); }
+
+  .pillar-number {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 72px;
+    font-weight: 300;
+    line-height: 1;
+    margin-bottom: 8px;
+    opacity: 0.12;
+    position: absolute;
+    top: 24px;
+    right: 28px;
+  }
+
+  .pillar-card:nth-child(1) .pillar-number { color: var(--terracotta); }
+  .pillar-card:nth-child(2) .pillar-number { color: var(--sage); }
+  .pillar-card:nth-child(3) .pillar-number { color: var(--gold); }
+
+  .pillar-label {
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    font-weight: 500;
+    margin-bottom: 12px;
+  }
+
+  .pillar-card:nth-child(1) .pillar-label { color: var(--terracotta); }
+  .pillar-card:nth-child(2) .pillar-label { color: var(--sage); }
+  .pillar-card:nth-child(3) .pillar-label { color: var(--gold); }
+
+  .pillar-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 32px;
+    font-weight: 400;
+    color: var(--forest);
+    margin-bottom: 20px;
+    line-height: 1.2;
+  }
+
+  .pillar-subtitle {
+    font-style: italic;
+    color: var(--text-light);
+    font-size: 14px;
+    margin-bottom: 20px;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 18px;
+  }
+
+  .pillar-text {
+    font-size: 15px;
+    line-height: 1.8;
+    color: var(--text-mid);
+    font-weight: 300;
+  }
+
+  /* ─── PRODUTO ─── */
+  .product {
+    background: var(--forest);
+    padding: 100px 24px;
+  }
+
+  .product-inner {
+    max-width: 780px;
+    margin: 0 auto;
+  }
+
+  .product .section-tag { color: var(--gold-light); }
+  .product .section-tag::before { background: var(--gold-light); }
+
+  .product h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(32px, 4vw, 52px);
+    font-weight: 400;
+    line-height: 1.2;
+    color: var(--cream);
+    margin-bottom: 16px;
+  }
+
+  .product-intro {
+    font-size: 17px;
+    line-height: 1.8;
+    color: rgba(245,240,232,0.65);
+    font-weight: 300;
+    margin-bottom: 56px;
+    max-width: 580px;
+  }
+
+  .modules-list {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .module-item {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.06);
+    padding: 28px 32px;
+    display: grid;
+    grid-template-columns: 48px 1fr;
+    gap: 20px;
+    align-items: start;
+    transition: background 0.3s;
+    cursor: default;
+  }
+
+  .module-item:hover {
+    background: rgba(255,255,255,0.07);
+  }
+
+  .module-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 28px;
+    font-weight: 300;
+    color: var(--terracotta-light);
+    line-height: 1;
+    padding-top: 2px;
+  }
+
+  .module-content h4 {
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--cream);
+    margin-bottom: 6px;
+    letter-spacing: 0.01em;
+  }
+
+  .module-content p {
+    font-size: 14px;
+    line-height: 1.7;
+    color: rgba(245,240,232,0.5);
+    font-weight: 300;
+  }
+
+  /* ─── SOCIAL PROOF ─── */
+  .proof {
+    background: var(--cream);
+    padding: 100px 24px;
+  }
+
+  .proof-header {
+    text-align: center;
+    max-width: 500px;
+    margin: 0 auto 64px;
+  }
+
+  .proof-header .section-tag { justify-content: center; }
+  .proof-header .section-tag::before { display: none; }
+
+  .proof-header h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(28px, 4vw, 46px);
+    font-weight: 400;
+    color: var(--forest);
+  }
+
+  .testimonials-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+
+  .testimonial {
+    background: var(--warm-white);
+    padding: 36px 32px;
+    border-radius: 2px;
+    position: relative;
+  }
+
+  .testimonial::before {
+    content: '"';
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 80px;
+    font-weight: 300;
+    color: var(--terracotta);
+    opacity: 0.25;
+    position: absolute;
+    top: 12px;
+    left: 24px;
+    line-height: 1;
+  }
+
+  .testimonial-text {
+    font-size: 15px;
+    line-height: 1.8;
+    color: var(--text-mid);
+    font-weight: 300;
+    margin-bottom: 24px;
+    padding-top: 20px;
+  }
+
+  .testimonial-author {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .testimonial-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--sage-light);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 18px;
+    color: white;
+    font-weight: 400;
+  }
+
+  .testimonial-name {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--forest);
+  }
+
+  .testimonial-role {
+    font-size: 12px;
+    color: var(--text-light);
+    margin-top: 2px;
+  }
+
+  /* ─── OFERTA ─── */
+  .offer {
+    background: var(--warm-white);
+    padding: 100px 24px;
+  }
+
+  .offer-inner {
+    max-width: 780px;
+    margin: 0 auto;
+  }
+
+  .offer-box {
+    background: var(--forest);
+    padding: 56px 48px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .offer-box::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 80% 60% at 100% 100%, rgba(196,114,74,0.1) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .offer-label {
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--gold-light);
+    font-weight: 400;
+    margin-bottom: 20px;
+  }
+
+  .offer-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(28px, 4vw, 44px);
+    font-weight: 400;
+    color: var(--cream);
+    margin-bottom: 12px;
+    line-height: 1.2;
+  }
+
+  .offer-subtitle {
+    font-size: 15px;
+    color: rgba(245,240,232,0.55);
+    font-weight: 300;
+    margin-bottom: 40px;
+  }
+
+  .offer-price {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    margin-bottom: 8px;
+  }
+
+  .offer-price-from {
+    font-size: 13px;
+    color: rgba(245,240,232,0.35);
+    text-decoration: line-through;
+  }
+
+  .offer-price-value {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 64px;
+    font-weight: 300;
+    color: var(--cream);
+    line-height: 1;
+  }
+
+  .offer-price-note {
+    font-size: 13px;
+    color: rgba(245,240,232,0.4);
+    margin-bottom: 36px;
+  }
+
+  .btn-offer {
+    display: inline-block;
+    background: var(--terracotta);
+    color: #fff;
+    text-decoration: none;
+    padding: 20px 52px;
+    font-size: 16px;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    border-radius: 2px;
+    transition: background 0.3s, transform 0.2s;
+    width: 100%;
+    text-align: center;
+    position: relative;
+  }
+
+  .btn-offer:hover {
+    background: var(--terracotta-dark);
+    transform: translateY(-2px);
+  }
+
+  .offer-guarantee {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 20px;
+    color: rgba(245,240,232,0.45);
+    font-size: 13px;
+  }
+
+  .offer-guarantee svg {
+    flex-shrink: 0;
+    opacity: 0.5;
+  }
+
+  /* ─── ORDER BUMPS ─── */
+  .bumps {
+    max-width: 780px;
+    margin: 0 auto;
+    margin-top: 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .bump-card {
+    background: var(--cream);
+    border: 1px solid rgba(0,0,0,0.07);
+    padding: 28px 32px;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 20px;
+    align-items: center;
+  }
+
+  .bump-tag {
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--terracotta);
+    font-weight: 500;
+    margin-bottom: 6px;
+  }
+
+  .bump-title {
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--forest);
+    margin-bottom: 6px;
+  }
+
+  .bump-desc {
+    font-size: 14px;
+    color: var(--text-light);
+    font-weight: 300;
+    line-height: 1.6;
+  }
+
+  .bump-price {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 32px;
+    font-weight: 400;
+    color: var(--terracotta);
+    white-space: nowrap;
+  }
+
+  /* ─── GARANTIA ─── */
+  .guarantee {
+    background: var(--sage-dark);
+    padding: 80px 24px;
+    text-align: center;
+  }
+
+  .guarantee-inner {
+    max-width: 560px;
+    margin: 0 auto;
+  }
+
+  .guarantee-icon {
+    width: 64px;
+    height: 64px;
+    margin: 0 auto 28px;
+    background: rgba(255,255,255,0.1);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .guarantee h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 36px;
+    font-weight: 400;
+    color: var(--cream);
+    margin-bottom: 16px;
+  }
+
+  .guarantee p {
+    font-size: 16px;
+    line-height: 1.8;
+    color: rgba(245,240,232,0.65);
+    font-weight: 300;
+  }
+
+  /* ─── FAQ ─── */
+  .faq {
+    background: var(--cream);
+    padding: 100px 24px;
+  }
+
+  .faq-inner {
+    max-width: 680px;
+    margin: 0 auto;
+  }
+
+  .faq .section-tag { justify-content: center; }
+  .faq .section-tag::before { display: none; }
+
+  .faq h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(28px, 4vw, 46px);
+    font-weight: 400;
+    color: var(--forest);
+    text-align: center;
+    margin-bottom: 56px;
+  }
+
+  .faq-item {
+    border-bottom: 1px solid rgba(0,0,0,0.08);
+    padding: 28px 0;
+  }
+
+  .faq-question {
+    font-size: 17px;
+    font-weight: 500;
+    color: var(--forest);
+    margin-bottom: 12px;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .faq-answer {
+    font-size: 15px;
+    line-height: 1.8;
+    color: var(--text-mid);
+    font-weight: 300;
+  }
+
+  /* ─── CLOSING ─── */
+  .closing {
+    background: var(--forest);
+    padding: 100px 24px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .closing::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: 
+      radial-gradient(ellipse 60% 50% at 50% 0%, rgba(196,114,74,0.15) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .closing-inner {
+    max-width: 620px;
+    margin: 0 auto;
+    position: relative;
+  }
+
+  .closing h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(32px, 5vw, 56px);
+    font-weight: 400;
+    line-height: 1.2;
+    color: var(--cream);
+    margin-bottom: 24px;
+  }
+
+  .closing h2 em {
+    font-style: italic;
+    color: var(--terracotta-light);
+  }
+
+  .closing p {
+    font-size: 17px;
+    line-height: 1.8;
+    color: rgba(245,240,232,0.65);
+    font-weight: 300;
+    margin-bottom: 48px;
+  }
+
+  /* ─── FOOTER ─── */
+  footer {
+    background: #151F12;
+    padding: 32px 24px;
+    text-align: center;
+    color: rgba(245,240,232,0.3);
+    font-size: 12px;
+    line-height: 1.8;
+  }
+
+  /* ─── STICKY CTA ─── */
+  .sticky-cta {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: var(--forest);
+    border-top: 1px solid rgba(196,114,74,0.3);
+    padding: 16px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    z-index: 100;
+    transform: translateY(100%);
+    transition: transform 0.4s ease;
+  }
+
+  .sticky-cta.visible {
+    transform: translateY(0);
+  }
+
+  .sticky-cta-text {
+    font-size: 14px;
+    color: rgba(245,240,232,0.65);
+    font-weight: 300;
+  }
+
+  .sticky-cta-text strong {
+    color: var(--cream);
+    display: block;
+    font-weight: 500;
+  }
+
+  .btn-sticky {
+    display: inline-block;
+    background: var(--terracotta);
+    color: #fff;
+    text-decoration: none;
+    padding: 12px 28px;
+    font-size: 14px;
+    font-weight: 500;
+    border-radius: 2px;
+    white-space: nowrap;
+    transition: background 0.3s;
+    flex-shrink: 0;
+  }
+
+  .btn-sticky:hover { background: var(--terracotta-dark); }
+
+  @media (max-width: 600px) {
+    .pillar-card { padding: 36px 28px; }
+    .offer-box { padding: 40px 28px; }
+    .bump-card { grid-template-columns: 1fr; }
+    .module-item { grid-template-columns: 36px 1fr; }
+    .sticky-cta { flex-direction: column; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="topbar">
+  <strong>BASE FIRME</strong> — Acesso imediato após a compra · Garantia de 7 dias
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-ornament">
+    <div class="hero-ornament-line"></div>
+    <svg class="hero-ornament-icon" viewBox="0 0 28 28" fill="none">
+      <path d="M14 2C14 2 8 8 8 14C8 17.3 10.7 20 14 20C17.3 20 20 17.3 20 14C20 8 14 2 14 2Z" stroke="#D4AF6A" stroke-width="1" fill="none" opacity="0.7"/>
+      <path d="M14 20V26M10 26H18" stroke="#D4AF6A" stroke-width="1" opacity="0.5"/>
+      <circle cx="14" cy="13" r="2.5" fill="#D4AF6A" opacity="0.4"/>
+    </svg>
+    <div class="hero-ornament-line right"></div>
+  </div>
+
+  <p class="hero-label reveal">Sistema 3P · Base Firme</p>
+
+  <h1 class="reveal" style="transition-delay:0.1s">
+    Você foi chamada para curar.<br>
+    <em>Mas ninguém te ensinou<br>a viver disso.</em>
+  </h1>
+
+  <p class="hero-sub reveal" style="transition-delay:0.2s">
+    O Sistema 3P que professoras de yoga usam para ter alunos fixos, renda previsível e autonomia — sem depender de estúdio, sem virar influencer, sem abrir mão de quem você é.
+  </p>
+
+  <a href="https://pay.kiwify.com.br/xMeGsdI" class="btn-hero reveal" style="transition-delay:0.3s">
+    QUERO BASE FIRME AGORA
+  </a>
+  <p class="hero-price-note reveal" style="transition-delay:0.4s">Acesso imediato por apenas R$197</p>
+</section>
+
+<!-- ESPELHO -->
+<section class="mirror">
+  <div class="mirror-inner">
+    <p class="section-tag reveal">Você se reconhece aqui?</p>
+
+    <h2 class="reveal">Você ama o que faz.<br>O problema é que o amor<br>não paga o boleto.</h2>
+
+    <p class="reveal">Você dá aula de manhã cedo, atravessa a cidade, dá aula à noite. Às vezes em três lugares diferentes. O corpo cansa. A mente cansa. E aquela sensação de que você nasceu pra mais do que isso não some — ela só fica mais pesada.</p>
+
+    <p class="reveal">Você já tentou postar mais. Já fez stories, Reels, carrossel. Ficou semanas seguindo fórmula de conteúdo que prometia lotar agenda. Resultado: alguns seguidores a mais e nenhum aluno novo.</p>
+
+    <p class="reveal">Talvez já tenha pensado em baixar o preço pra atrair mais gente. Ou em aceitar qualquer estúdio que aparece, mesmo pagando mal, só pra manter a renda.</p>
+
+    <div class="mirror-question reveal">
+      "Será que dá pra viver de verdade<br>só com o yoga?"
+    </div>
+
+    <p class="reveal"><strong>Dá. Mas não do jeito que você está fazendo.</strong></p>
+  </div>
+</section>
+
+<!-- REFRAME -->
+<section class="reframe">
+  <div class="reframe-inner">
+    <p class="section-tag reveal">O problema real</p>
+
+    <h2 class="reveal">O problema não é<br>a sua qualidade como professora.</h2>
+
+    <p class="reveal">O problema é que você foi formada para ensinar yoga — não para construir uma carreira com ele.</p>
+
+    <p class="reveal">Nenhuma formação te ensinou a definir para quem você serve. A aparecer de forma que atraia o aluno certo. A montar uma oferta que fecha. A criar previsibilidade de renda sem se destruir no processo.</p>
+
+    <div class="reframe-highlight reveal">
+      <p>Isso não é falta de talento.<br>É falta de estrutura.<br><br>E estrutura se aprende.</p>
+    </div>
+
+    <p class="reveal">Existe um caminho entre a vocação e a prosperidade. Ele tem três pilares. Chamamos de <strong style="color: var(--cream);">Sistema 3P — Base Firme.</strong></p>
+  </div>
+</section>
+
+<!-- PILLARS -->
+<section class="pillars">
+  <div class="pillars-header">
+    <p class="section-tag reveal">O método</p>
+    <h2 class="reveal">Os três pilares<br>da carreira sólida</h2>
+  </div>
+
+  <div class="pillars-grid">
+    <div class="pillar-card reveal">
+      <div class="pillar-number">P1</div>
+      <p class="pillar-label">Primeiro Pilar</p>
+      <h3 class="pillar-title">Propósito</h3>
+      <p class="pillar-subtitle">"Você foi chamada. Agora precisa saber para quem."</p>
+      <p class="pillar-text">Você foi chamada para ajudar pessoas a se curarem. Mas sem clareza de quem são essas pessoas e o que exatamente você transforma na vida delas, sua mensagem se perde — e o aluno certo nunca chega.<br><br>O primeiro pilar é reconhecer sua missão com precisão. Não escolher um nicho de marketing. Reconhecer quem já está no caminho que você foi chamada a iluminar.</p>
+    </div>
+
+    <div class="pillar-card reveal" style="transition-delay:0.15s">
+      <div class="pillar-number">P2</div>
+      <p class="pillar-label">Segundo Pilar</p>
+      <h3 class="pillar-title">Posicionamento</h3>
+      <p class="pillar-subtitle">"Aparecer não é se exibir. É ser encontrada por quem precisa de você."</p>
+      <p class="pillar-text">A maioria das professoras posta muito e atrai pouco — porque o conteúdo não fala com ninguém específico. É yoga genérico para uma internet cheia de yoga genérico.<br><br>Quando seu posicionamento está certo, o aluno certo chega até você já convencido. A venda já aconteceu antes da conversa.</p>
+    </div>
+
+    <div class="pillar-card reveal" style="transition-delay:0.3s">
+      <div class="pillar-number">P3</div>
+      <p class="pillar-label">Terceiro Pilar</p>
+      <h3 class="pillar-title">Prosperidade</h3>
+      <p class="pillar-subtitle">"Abundância sem estrutura não pousa."</p>
+      <p class="pillar-text">Você pode ter o propósito mais bonito do mundo e o posicionamento mais claro — mas se sua oferta for confusa, seu preço for errado e você não tiver um sistema para gerar alunos todo mês, a renda não se materializa.<br><br>Oferta clara, preço que reflete seu valor e um processo simples que transforma interessados em alunos pagantes — todo mês, de forma previsível.</p>
+    </div>
+  </div>
+</section>
+
+<!-- PRODUTO -->
+<section class="product">
+  <div class="product-inner">
+    <p class="section-tag reveal">O que você recebe</p>
+    <h2 class="reveal">Base Firme</h2>
+    <p class="product-intro reveal">Um curso em vídeo criado especificamente para professoras de yoga que querem construir uma carreira sólida. Não é formação de yoga. Não é curso de marketing digital. É a estrutura de negócio que nenhuma formação te deu.</p>
+
+    <div class="modules-list">
+      <div class="module-item reveal">
+        <div class="module-num">01</div>
+        <div class="module-content">
+          <h4>Propósito em Foco</h4>
+          <p>Como identificar com clareza quem você serve e o que você transforma. Sair do yoga genérico e ocupar o espaço que só você pode ocupar.</p>
+        </div>
+      </div>
+      <div class="module-item reveal" style="transition-delay:0.08s">
+        <div class="module-num">02</div>
+        <div class="module-content">
+          <h4>Presença com Intenção</h4>
+          <p>Como aparecer no Instagram de forma que atraia o aluno certo — sem precisar postar todo dia, sem dançar, sem virar influencer.</p>
+        </div>
+      </div>
+      <div class="module-item reveal" style="transition-delay:0.16s">
+        <div class="module-num">03</div>
+        <div class="module-content">
+          <h4>Oferta que Fecha</h4>
+          <p>Como montar pacotes de aula que o aluno entende, quer e paga. Sair da aula avulsa e entrar no modelo que gera previsibilidade.</p>
+        </div>
+      </div>
+      <div class="module-item reveal" style="transition-delay:0.24s">
+        <div class="module-num">04</div>
+        <div class="module-content">
+          <h4>Conversa que Converte</h4>
+          <p>Como conduzir a conversa do interesse ao pagamento — sem parecer que está vendendo, sem travar na hora do preço.</p>
+        </div>
+      </div>
+      <div class="module-item reveal" style="transition-delay:0.32s">
+        <div class="module-num">05</div>
+        <div class="module-content">
+          <h4>Sistema de Previsibilidade</h4>
+          <p>Como criar um fluxo constante de novos alunos e manter os que já estão — para que sua agenda nunca dependa só de indicação.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROVA SOCIAL -->
+<section class="proof">
+  <div class="proof-header">
+    <p class="section-tag reveal">Resultados reais</p>
+    <h2 class="reveal">Professoras que<br>construíram base firme</h2>
+  </div>
+
+  <div class="testimonials-grid">
+    <div class="testimonial reveal">
+      <p class="testimonial-text">Eu ficava me perguntando por que não conseguia atrair alunos mesmo postando todo dia. Depois de clarear meu propósito e reposicionar minha mensagem, fechei 4 alunos fixos em três semanas. Minha agenda nunca tinha sido tão cheia.</p>
+      <div class="testimonial-author">
+        <div class="testimonial-avatar">M</div>
+        <div>
+          <div class="testimonial-name">Mariana S.</div>
+          <div class="testimonial-role">Professora de Yoga Pré-natal · São Paulo</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="testimonial reveal" style="transition-delay:0.15s">
+      <p class="testimonial-text">Eu cobrava R$40 a aula e achava que era o mercado. Depois de entender como montar meu pacote, comecei a cobrar R$380 por mês e os alunos aceitaram sem questionar. A renda triplicou em dois meses.</p>
+      <div class="testimonial-author">
+        <div class="testimonial-avatar">C</div>
+        <div>
+          <div class="testimonial-name">Carla F.</div>
+          <div class="testimonial-role">Professora de Hatha Yoga · Belo Horizonte</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="testimonial reveal" style="transition-delay:0.3s">
+      <p class="testimonial-text">Eu dependia de três estúdios para pagar as contas. Hoje tenho minha própria base de alunos, trabalho de casa e ganho mais do que quando estava nos três estúdios juntos. Não precisei me tornar influencer para isso.</p>
+      <div class="testimonial-author">
+        <div class="testimonial-avatar">A</div>
+        <div>
+          <div class="testimonial-name">Ana P.</div>
+          <div class="testimonial-role">Professora de Yin Yoga · Rio de Janeiro</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- OFERTA + ORDER BUMPS -->
+<section class="offer">
+  <div class="offer-inner">
+    <div class="offer-box reveal">
+      <p class="offer-label">Sua oferta completa</p>
+      <h2 class="offer-title">Base Firme — Sistema 3P</h2>
+      <p class="offer-subtitle">Curso completo em vídeo · Acesso imediato e vitalício</p>
+
+      <div class="offer-price">
+        <span class="offer-price-from">R$497</span>
+        <span class="offer-price-value">R$197</span>
+      </div>
+      <p class="offer-price-note">Pagamento único · Parcelamento disponível no cartão</p>
+
+      <a href="https://pay.kiwify.com.br/xMeGsdI" class="btn-offer">
+        QUERO BASE FIRME AGORA — R$197
+      </a>
+
+      <div class="offer-guarantee">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+          <path d="M10 2L3 5V10C3 14.4 6 18.4 10 19C14 18.4 17 14.4 17 10V5L10 2Z" stroke="#D4AF6A" stroke-width="1.5" fill="none"/>
+          <path d="M7 10L9 12L13 8" stroke="#D4AF6A" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+        Garantia incondicional de 7 dias · Se não fizer sentido, devolvemos 100% do seu dinheiro.
+      </div>
+    </div>
+  </div>
+
+  <!-- ORDER BUMPS -->
+  <div class="bumps">
+    <div class="bump-card reveal">
+      <div>
+        <p class="bump-tag">Complemento recomendado</p>
+        <p class="bump-title">Scripts Prontos — Da DM ao Fechamento</p>
+        <p class="bump-desc">Scripts de DM, WhatsApp, apresentação de preço, resposta para "tá caro", follow-up para quem sumiu e reativação de ex-aluno. Você para de improvisar na hora que mais importa.</p>
+      </div>
+      <div class="bump-price">+ R$47</div>
+    </div>
+
+    <div class="bump-card reveal" style="transition-delay:0.15s">
+      <div>
+        <p class="bump-tag">Kit operacional</p>
+        <p class="bump-title">Planilha + Calculadora + Contrato</p>
+        <p class="bump-desc">Controle de alunos ativos e inativos, calculadora de meta mensal e modelo de contrato simples para professora autônoma. A estrutura administrativa que você nunca teve.</p>
+      </div>
+      <div class="bump-price">+ R$97</div>
+    </div>
+  </div>
+</section>
+
+<!-- GARANTIA -->
+<section class="guarantee">
+  <div class="guarantee-inner">
+    <div class="guarantee-icon reveal">
+      <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+        <path d="M14 3L4 7V14C4 20 8.5 25.5 14 27C19.5 25.5 24 20 24 14V7L14 3Z" stroke="#D4AF6A" stroke-width="1.5" fill="none"/>
+        <path d="M10 14L12.5 16.5L18 11" stroke="#D4AF6A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+    <h3 class="reveal">Garantia de 7 dias</h3>
+    <p class="reveal">Você tem 7 dias para acessar o curso, assistir os módulos e aplicar o que aprender. Se não fizer sentido para a sua realidade, devolvemos 100% do seu dinheiro. Sem perguntas. O risco é todo nosso.</p>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq">
+  <div class="faq-inner">
+    <p class="section-tag reveal">Perguntas frequentes</p>
+    <h2 class="reveal">Isso é pra mim?</h2>
+
+    <div class="faq-item reveal">
+      <p class="faq-question">Funciona mesmo sem ter muitos seguidores?</p>
+      <p class="faq-answer">Sim. O Sistema 3P não depende de audiência grande. Depende de audiência certa. Professoras com menos de 500 seguidores já fecharam agenda com esse método. O que muda não é o volume — é a clareza de para quem você fala.</p>
+    </div>
+
+    <div class="faq-item reveal">
+      <p class="faq-question">Tenho tempo pra isso?</p>
+      <p class="faq-answer">Os módulos são diretos e objetivos. Sem enrolação. Você consegue assistir e aplicar nos fins de semana — sem precisar parar sua rotina de aulas.</p>
+    </div>
+
+    <div class="faq-item reveal">
+      <p class="faq-question">Preciso saber de tecnologia ou marketing?</p>
+      <p class="faq-answer">Não. O curso foi feito para professoras, não para marqueteiras. A linguagem é simples, os exercícios são práticos e você não vai precisar aprender nenhuma ferramenta complicada.</p>
+    </div>
+
+    <div class="faq-item reveal">
+      <p class="faq-question">E se não funcionar pra minha realidade?</p>
+      <p class="faq-answer">7 dias de garantia incondicional. Se você aplicar o método e sentir que não faz sentido para a sua situação, basta enviar um e-mail e devolvemos 100% do valor. Sem burocracia.</p>
+    </div>
+
+    <div class="faq-item reveal">
+      <p class="faq-question">Isso vai contra os valores do yoga?</p>
+      <p class="faq-answer">Ao contrário. Uma professora com renda estável ensina com mais presença, serve mais pessoas e mantém sua prática viva. Prosperidade com estrutura é o canal pelo qual a sua missão se manifesta de verdade — não uma contradição com ela.</p>
+    </div>
+  </div>
+</section>
+
+<!-- FECHAMENTO -->
+<section class="closing">
+  <div class="closing-inner">
+    <h2 class="reveal">Daqui a seis meses você<br>vai estar em um de<br><em>dois lugares.</em></h2>
+    <p class="reveal">No mesmo lugar que está hoje — agenda instável, renda imprevisível, dependendo de estúdio, sem saber de onde vem o próximo aluno.<br><br>Ou com uma carreira que tem base firme. Alunos que ficam. Renda que você consegue planejar. Autonomia para ensinar o que você foi chamada a ensinar.<br><br>A diferença entre esses dois caminhos começa com uma decisão de R$197.</p>
+
+    <a href="https://pay.kiwify.com.br/xMeGsdI" class="btn-offer reveal" style="display:inline-block; width:auto; padding: 20px 52px;">
+      COMEÇAR AGORA — R$197
+    </a>
+    <p style="margin-top:16px; color:rgba(245,240,232,0.35); font-size:13px;" class="reveal">Acesso imediato · Garantia de 7 dias · Pagamento seguro</p>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>Base Firme — Sistema 3P para Professoras de Yoga</p>
+  <p style="margin-top:8px">Todos os direitos reservados · Conteúdo protegido</p>
+</footer>
+
+<!-- STICKY CTA -->
+<div class="sticky-cta" id="stickyCta">
+  <div class="sticky-cta-text">
+    <strong>Base Firme — Sistema 3P</strong>
+    Acesso imediato por R$197
+  </div>
+  <a href="https://pay.kiwify.com.br/xMeGsdI" class="btn-sticky">QUERO AGORA</a>
+</div>
+
+<script>
+  // Reveal on scroll
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.12 });
+
+  reveals.forEach(el => observer.observe(el));
+
+  // Sticky CTA
+  const hero = document.querySelector('.hero');
+  const stickyCta = document.getElementById('stickyCta');
+
+  window.addEventListener('scroll', () => {
+    const heroBottom = hero.getBoundingClientRect().bottom;
+    if (heroBottom < 0) {
+      stickyCta.classList.add('visible');
+    } else {
+      stickyCta.classList.remove('visible');
+    }
+  });
+
+  // Trigger initial reveals for above-fold
+  setTimeout(() => {
+    reveals.forEach(el => {
+      const rect = el.getBoundingClientRect();
+      if (rect.top < window.innerHeight) {
+        el.classList.add('visible');
+      }
+    });
+  }, 100);
+</script>
+
+</body>
+</html>

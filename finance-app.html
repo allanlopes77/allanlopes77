@@ -1,0 +1,1221 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DuoPJ — Finanças para Empreendedores Casados</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💳</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/motion@latest/dist/motion.js"></script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --navy:#0F172A;--navy-800:#1E293B;--navy-700:#334155;
+  --indigo:#6366F1;--indigo-dark:#4F46E5;--indigo-light:#EEF2FF;
+  --green:#10B981;--green-light:#D1FAE5;
+  --red:#EF4444;--red-light:#FEE2E2;
+  --amber:#F59E0B;--amber-light:#FEF3C7;
+  --bg:#F1F5F9;--white:#FFFFFF;
+  --gray-100:#F8FAFC;--gray-200:#E2E8F0;--gray-300:#CBD5E1;
+  --gray-400:#94A3B8;--gray-500:#64748B;--gray-600:#475569;
+  --gray-700:#334155;--gray-800:#1E293B;
+  --sidebar-w:240px;
+}
+html{font-family:'Inter',system-ui,sans-serif;font-size:14px}
+body{background:var(--bg);color:var(--navy);min-height:100vh}
+button{font-family:inherit;cursor:pointer}
+input{font-family:inherit}
+
+/* ── VIEWS ── */
+.view{display:none!important}
+.view.active{display:flex!important}
+.view.block-view.active{display:block!important}
+
+/* ── LOGIN ── */
+#view-login{min-height:100vh;align-items:center;justify-content:center;
+  background:linear-gradient(145deg,#0F172A 0%,#1e1b4b 60%,#0F172A 100%)}
+
+.login-card{background:white;border-radius:20px;padding:44px 40px;width:100%;max-width:400px;
+  box-shadow:0 32px 64px -12px rgba(0,0,0,0.35)}
+
+.logo-mark{display:inline-flex;align-items:center;gap:10px;margin-bottom:32px}
+.logo-icon{width:38px;height:38px;background:var(--indigo);border-radius:10px;
+  display:flex;align-items:center;justify-content:center}
+.logo-text{font-size:22px;font-weight:800;color:var(--navy)}
+.logo-text span{color:var(--indigo)}
+.login-title{font-size:22px;font-weight:700;margin-bottom:6px}
+.login-sub{font-size:13px;color:var(--gray-500);margin-bottom:28px;line-height:1.6}
+.form-group{margin-bottom:14px}
+.form-label{display:block;font-size:12px;font-weight:600;color:var(--gray-700);margin-bottom:5px}
+.form-input{width:100%;padding:10px 14px;border:1.5px solid var(--gray-200);border-radius:9px;
+  font-size:14px;color:var(--navy);background:var(--gray-100);transition:border-color .2s}
+.form-input:focus{outline:none;border-color:var(--indigo);background:white}
+.btn-primary{width:100%;padding:12px;background:var(--indigo);color:white;border:none;
+  border-radius:9px;font-size:15px;font-weight:600;transition:background .2s,transform .1s;margin-top:6px}
+.btn-primary:hover{background:var(--indigo-dark)}
+.btn-primary:active{transform:scale(.99)}
+.login-footer{text-align:center;margin-top:20px;font-size:13px;color:var(--gray-500)}
+.login-footer a{color:var(--indigo);font-weight:600;text-decoration:none}
+.demo-note{margin-top:16px;padding:10px 14px;background:var(--indigo-light);border-radius:8px;
+  font-size:12px;color:var(--indigo-dark);text-align:center}
+
+/* ── ONBOARDING ── */
+#view-onboarding{min-height:100vh;align-items:center;justify-content:center;
+  background:linear-gradient(145deg,#0F172A 0%,#1e1b4b 60%,#0F172A 100%)}
+.ob-card{background:white;border-radius:20px;padding:44px 40px;width:100%;max-width:520px;
+  box-shadow:0 32px 64px -12px rgba(0,0,0,0.35)}
+.ob-steps{display:flex;align-items:center;gap:6px;margin-bottom:36px}
+.step-dot{height:6px;border-radius:3px;background:var(--gray-200);transition:all .3s}
+.step-dot.active{background:var(--indigo);width:24px!important}
+.step-dot.done{background:var(--green)}
+.ob-step{display:none}
+.ob-step.active{display:block}
+.ob-icon{width:60px;height:60px;background:var(--indigo-light);border-radius:16px;
+  display:flex;align-items:center;justify-content:center;margin-bottom:20px}
+.ob-title{font-size:21px;font-weight:700;margin-bottom:10px}
+.ob-desc{font-size:13px;color:var(--gray-500);line-height:1.7;margin-bottom:28px}
+
+.bank-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:20px}
+.bank-item{border:2px solid var(--gray-200);border-radius:10px;padding:12px 8px;
+  text-align:center;cursor:pointer;transition:all .2s;user-select:none}
+.bank-item:hover{border-color:var(--indigo);background:var(--indigo-light)}
+.bank-item.connected{border-color:var(--green);background:var(--green-light)}
+.bank-logo{width:34px;height:34px;border-radius:8px;margin:0 auto 6px;
+  display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;color:white}
+.bank-name{font-size:11px;color:var(--gray-600);font-weight:500}
+.bank-check{font-size:12px;color:var(--green);font-weight:700;margin-top:3px}
+
+.pluggy-note{display:flex;align-items:center;gap:8px;padding:10px 14px;
+  background:#FFF7ED;border:1px solid #FED7AA;border-radius:8px;margin-bottom:20px;
+  font-size:12px;color:#9A3412}
+.pluggy-dot{width:8px;height:8px;border-radius:50%;background:#F97316;flex-shrink:0}
+
+.btn-ob{width:100%;padding:12px;background:var(--indigo);color:white;border:none;
+  border-radius:9px;font-size:14px;font-weight:600;transition:all .2s}
+.btn-ob:hover{background:var(--indigo-dark)}
+.btn-ob:disabled{background:var(--gray-300);cursor:not-allowed}
+.btn-ob-ghost{width:100%;padding:12px;background:none;color:var(--gray-500);border:1.5px solid var(--gray-200);
+  border-radius:9px;font-size:14px;font-weight:500;margin-top:8px;transition:all .2s}
+.btn-ob-ghost:hover{border-color:var(--gray-400);color:var(--gray-700)}
+
+.success-icon{width:72px;height:72px;background:var(--green-light);border-radius:50%;
+  display:flex;align-items:center;justify-content:center;margin-bottom:20px}
+.connected-list{display:flex;flex-direction:column;gap:8px;margin-bottom:24px}
+.connected-item{display:flex;align-items:center;gap:10px;padding:10px 14px;
+  background:var(--gray-100);border-radius:8px}
+.connected-item-icon{width:28px;height:28px;border-radius:6px;
+  display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:white;flex-shrink:0}
+.connected-item-name{font-size:13px;font-weight:500}
+.connected-item-type{font-size:11px;color:var(--gray-400)}
+.connected-check{margin-left:auto;color:var(--green);font-size:16px}
+
+/* ── APP LAYOUT ── */
+#view-app{min-height:100vh;block-view:false}
+#view-app.active{display:flex!important}
+
+.sidebar{width:var(--sidebar-w);background:var(--navy);display:flex;flex-direction:column;
+  position:fixed;top:0;left:0;bottom:0;z-index:100;overflow-y:auto}
+.sb-logo{padding:20px 18px 20px;display:flex;align-items:center;gap:10px;
+  border-bottom:1px solid rgba(255,255,255,.07)}
+.sb-logo-icon{width:30px;height:30px;background:var(--indigo);border-radius:8px;
+  display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.sb-logo-text{font-size:16px;font-weight:800;color:white}
+.sb-logo-text span{color:#A5B4FC}
+.sb-nav{flex:1;padding:12px}
+.nav-label{font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;
+  color:rgba(255,255,255,.3);padding:8px 8px 4px;margin-top:4px}
+.nav-item{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:8px;
+  cursor:pointer;color:rgba(255,255,255,.55);font-size:13px;font-weight:500;
+  border:none;background:none;width:100%;text-align:left;transition:all .15s}
+.nav-item:hover{background:rgba(255,255,255,.08);color:rgba(255,255,255,.9)}
+.nav-item.active{background:var(--indigo);color:white}
+.nav-item svg{flex-shrink:0;opacity:.8}
+.nav-item.active svg{opacity:1}
+
+.sb-context{padding:12px;border-top:1px solid rgba(255,255,255,.07)}
+.ctx-label{font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;
+  color:rgba(255,255,255,.3);padding:0 4px 8px}
+.ctx-tab{display:flex;align-items:center;gap:8px;padding:8px 12px;border-radius:8px;
+  cursor:pointer;font-size:12px;font-weight:500;color:rgba(255,255,255,.45);
+  transition:all .15s;border:none;background:none;width:100%;text-align:left}
+.ctx-tab:hover{color:rgba(255,255,255,.8);background:rgba(255,255,255,.06)}
+.ctx-tab.active{color:white;background:rgba(255,255,255,.12)}
+.ctx-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
+
+.sb-user{padding:14px;border-top:1px solid rgba(255,255,255,.07);
+  display:flex;align-items:center;gap:10px}
+.user-av{width:32px;height:32px;border-radius:50%;background:var(--indigo);
+  display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:white;flex-shrink:0}
+.user-name{font-size:12px;font-weight:600;color:white}
+.user-email{font-size:11px;color:rgba(255,255,255,.35)}
+
+.main-content{margin-left:var(--sidebar-w);flex:1;min-height:100vh;display:flex;flex-direction:column}
+
+.topbar{background:white;border-bottom:1px solid var(--gray-200);padding:0 28px;height:60px;
+  display:flex;align-items:center;gap:14px;position:sticky;top:0;z-index:50}
+.topbar-title{font-size:17px;font-weight:700;flex:1}
+.month-nav{display:flex;align-items:center;gap:8px;font-size:13px;font-weight:500;color:var(--gray-600)}
+.mnav-btn{width:26px;height:26px;border:1.5px solid var(--gray-200);border-radius:6px;
+  background:none;cursor:pointer;display:flex;align-items:center;justify-content:center;
+  color:var(--gray-500);transition:all .15s}
+.mnav-btn:hover{border-color:var(--indigo);color:var(--indigo)}
+.topbar-av{width:34px;height:34px;border-radius:50%;background:var(--indigo);
+  display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:white;cursor:pointer}
+
+.page{padding:28px;display:none}
+.page.active{display:block}
+
+/* ── SUMMARY CARDS ── */
+.summary-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:20px}
+.s-card{background:white;border-radius:12px;padding:18px 20px;border:1px solid var(--gray-200);
+  position:relative;overflow:hidden}
+.s-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px}
+.s-card.c-indigo::before{background:var(--indigo)}
+.s-card.c-green::before{background:var(--green)}
+.s-card.c-red::before{background:var(--red)}
+.s-card.c-amber::before{background:var(--amber)}
+.card-label{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;
+  color:var(--gray-400);margin-bottom:6px}
+.card-value{font-size:26px;font-weight:700;color:var(--navy);line-height:1.1}
+.card-value.green{color:var(--green)}
+.card-value.red{color:var(--red)}
+.card-sub{font-size:11px;color:var(--gray-400);margin-top:4px}
+.card-sub .up{color:var(--green)}
+.card-sub .down{color:var(--red)}
+
+/* ── PERSON CARDS ── */
+.person-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:20px}
+.p-card{background:white;border-radius:12px;padding:20px;border:1px solid var(--gray-200)}
+.p-header{display:flex;align-items:center;gap:10px;margin-bottom:16px}
+.p-av{width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+  font-size:15px;font-weight:700;color:white;flex-shrink:0}
+.p-av.blue{background:#6366F1}
+.p-av.purple{background:#8B5CF6}
+.p-name{font-size:14px;font-weight:600}
+.p-role{font-size:11px;color:var(--gray-400)}
+.stat-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+.stat-label{font-size:12px;color:var(--gray-500)}
+.stat-val{font-size:13px;font-weight:600}
+.stat-val.green{color:var(--green)}
+.stat-val.red{color:var(--red)}
+.stat-bar{height:4px;background:var(--gray-100);border-radius:2px;margin-top:6px;overflow:hidden}
+.stat-bar-fill{height:100%;border-radius:2px}
+
+/* ── TRANSACTIONS ── */
+.section-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+.section-title{font-size:15px;font-weight:700}
+.see-all{font-size:12px;color:var(--indigo);font-weight:600;cursor:pointer;text-decoration:none;
+  background:none;border:none;padding:0}
+
+.tx-card{background:white;border-radius:12px;border:1px solid var(--gray-200);overflow:hidden;margin-bottom:20px}
+
+.filter-bar{display:flex;align-items:center;gap:10px;padding:14px 18px;border-bottom:1px solid var(--gray-100);flex-wrap:wrap}
+.search-box{display:flex;align-items:center;gap:8px;background:var(--gray-100);
+  border-radius:8px;padding:7px 12px;flex:1;min-width:160px}
+.search-box input{border:none;background:none;font-size:13px;color:var(--navy);width:100%}
+.search-box input:focus{outline:none}
+.f-chip{display:flex;align-items:center;gap:5px;padding:5px 11px;border-radius:20px;
+  border:1.5px solid var(--gray-200);font-size:11px;font-weight:500;color:var(--gray-600);
+  cursor:pointer;transition:all .15s;background:none;white-space:nowrap}
+.f-chip:hover,.f-chip.active{border-color:var(--indigo);color:var(--indigo);background:var(--indigo-light)}
+
+.tx-row{display:flex;align-items:center;gap:12px;padding:12px 18px;
+  border-bottom:1px solid var(--gray-100);transition:background .1s;cursor:default}
+.tx-row:last-child{border-bottom:none}
+.tx-row:hover{background:var(--gray-100)}
+.tx-icon{width:38px;height:38px;border-radius:10px;display:flex;align-items:center;
+  justify-content:center;font-size:17px;flex-shrink:0}
+.tx-info{flex:1;min-width:0}
+.tx-name{font-size:13px;font-weight:500;color:var(--navy);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tx-meta{display:flex;align-items:center;gap:5px;margin-top:2px;flex-wrap:wrap}
+.cat-badge{background:var(--gray-100);color:var(--gray-500);padding:2px 7px;
+  border-radius:10px;font-size:10px;font-weight:500}
+.ai-badge{background:#EDE9FE;color:#7C3AED;padding:2px 6px;border-radius:10px;
+  font-size:9px;font-weight:700;letter-spacing:.03em}
+.acc-badge{padding:2px 6px;border-radius:4px;font-size:10px;font-weight:500}
+.tx-right{text-align:right;flex-shrink:0}
+.tx-amount{font-size:13px;font-weight:600}
+.tx-amount.credit{color:var(--green)}
+.tx-amount.debit{color:var(--navy)}
+.tx-date{font-size:11px;color:var(--gray-400);margin-top:2px}
+
+/* ── FORECAST ── */
+.alert-banner{background:var(--amber-light);border:1px solid #FDE68A;border-radius:10px;
+  padding:12px 16px;display:flex;align-items:flex-start;gap:10px;margin-bottom:20px}
+.alert-icon{font-size:18px;flex-shrink:0;margin-top:1px}
+.alert-text{font-size:12px;color:#92400E;line-height:1.6}
+.alert-text strong{font-weight:700}
+
+.chart-card{background:white;border-radius:12px;border:1px solid var(--gray-200);padding:22px;margin-bottom:20px}
+.chart-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px}
+.chart-title{font-size:14px;font-weight:700}
+.chart-legend{display:flex;gap:14px}
+.leg-item{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--gray-500)}
+.leg-dot{width:8px;height:8px;border-radius:2px}
+
+#forecastChart{width:100%;overflow:visible}
+
+.forecast-table-card{background:white;border-radius:12px;border:1px solid var(--gray-200);overflow:hidden}
+.ft table{width:100%;border-collapse:collapse}
+.ft th{background:var(--gray-100);padding:10px 16px;text-align:left;
+  font-size:10px;font-weight:600;color:var(--gray-500);text-transform:uppercase;
+  letter-spacing:.06em;border-bottom:1px solid var(--gray-200)}
+.ft td{padding:10px 16px;font-size:12px;border-bottom:1px solid var(--gray-100);color:var(--navy)}
+.ft tr:last-child td{border-bottom:none}
+.ft tr.projected td{color:var(--gray-500)}
+.ft tr.tight-month td{background:#FFFBEB}
+.proj-badge{font-size:9px;font-weight:700;background:var(--indigo-light);color:var(--indigo);
+  padding:1px 5px;border-radius:4px;text-transform:uppercase;letter-spacing:.04em;margin-left:5px}
+.warn-badge{font-size:9px;font-weight:700;background:var(--amber-light);color:#B45309;
+  padding:1px 5px;border-radius:4px;margin-left:5px}
+
+/* ── CREDIT CARDS ── */
+.cc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:20px}
+.cc-wrap{background:white;border-radius:12px;border:1px solid var(--gray-200);overflow:hidden}
+.cc-visual{padding:20px;min-height:140px;position:relative;overflow:hidden;color:white}
+.cc-grad-1{background:linear-gradient(135deg,#1e1b4b 0%,#312e81 100%)}
+.cc-grad-2{background:linear-gradient(135deg,#0D0D0D 0%,#1a0533 100%)}
+.cc-grad-3{background:linear-gradient(135deg,#0f3460 0%,#533483 100%)}
+.cc-shimmer{position:absolute;width:180px;height:180px;border-radius:50%;
+  background:rgba(255,255,255,.05);top:-50px;right:-40px;pointer-events:none}
+.cc-bank-name{font-size:13px;font-weight:600;opacity:.7;margin-bottom:16px}
+.cc-number{font-size:12px;letter-spacing:.15em;opacity:.45;margin-bottom:6px}
+.cc-holder{font-size:10px;opacity:.5;text-transform:uppercase;letter-spacing:.08em}
+.cc-network{position:absolute;top:20px;right:20px;font-size:10px;opacity:.4;
+  font-weight:700;letter-spacing:.06em}
+.cc-body{padding:16px}
+.cc-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+.cc-label{font-size:11px;color:var(--gray-500)}
+.cc-val{font-size:13px;font-weight:600;color:var(--navy)}
+.inv-tag{font-size:9px;font-weight:700;padding:2px 7px;border-radius:10px;text-transform:uppercase}
+.inv-tag.current{background:var(--amber-light);color:#B45309}
+.inv-tag.next{background:var(--indigo-light);color:var(--indigo)}
+.inv-tag.paid{background:var(--green-light);color:#065F46}
+.cc-divider{height:1px;background:var(--gray-100);margin:10px 0}
+.cc-amount-big{font-size:22px;font-weight:700;color:var(--navy);margin-bottom:2px}
+.cc-due{font-size:11px;color:var(--gray-400);margin-bottom:10px}
+.cc-prog-bar{height:5px;background:var(--gray-100);border-radius:3px;overflow:hidden;margin-bottom:4px}
+.cc-prog-fill{height:100%;border-radius:3px}
+.cc-limit-txt{font-size:10px;color:var(--gray-400)}
+
+.section-card{background:white;border-radius:12px;border:1px solid var(--gray-200);overflow:hidden}
+
+/* ── UTILITIES ── */
+.mt-4{margin-top:16px}
+.mb-4{margin-bottom:16px}
+.mb-5{margin-bottom:20px}
+.mb-6{margin-bottom:24px}
+.flex{display:flex}
+.items-center{align-items:center}
+.gap-2{gap:8px}
+.text-gray{color:var(--gray-500)}
+.text-sm{font-size:12px}
+.font-medium{font-weight:500}
+.font-semibold{font-weight:600}
+
+/* ── ANIMATION HELPERS ── */
+.will-animate{opacity:0}
+.bar-animate rect{transform-origin:bottom center}
+
+@media(max-width:900px){
+  .sidebar{display:none}
+  .main-content{margin-left:0}
+  .summary-grid{grid-template-columns:1fr 1fr}
+  .person-grid{grid-template-columns:1fr}
+  .cc-grid{grid-template-columns:1fr}
+}
+@media(max-width:600px){
+  .summary-grid{grid-template-columns:1fr}
+  .page{padding:16px}
+}
+</style>
+</head>
+<body>
+
+<!-- ════════════════════════════════════════════════ LOGIN ══ -->
+<div id="view-login" class="view active">
+  <div class="login-card">
+    <div class="logo-mark">
+      <div class="logo-icon">
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+          <path d="M3 9h5M10 9h5M9 3v5M9 10v5" stroke="white" stroke-width="1.8" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <div class="logo-text">Duo<span>PJ</span></div>
+    </div>
+    <div class="login-title">Bom ter você de volta</div>
+    <div class="login-sub">Suas finanças — empresa e família — em um só lugar.</div>
+    <div class="form-group">
+      <label class="form-label">E-mail</label>
+      <input class="form-input" type="email" placeholder="voce@empresa.com.br" value="thiago@thlegal.com.br">
+    </div>
+    <div class="form-group">
+      <label class="form-label">Senha</label>
+      <input class="form-input" type="password" placeholder="••••••••" value="demo1234">
+    </div>
+    <button class="btn-primary" onclick="goTo('onboarding')">Entrar</button>
+    <div class="demo-note">Modo demo — clique em Entrar para explorar o app</div>
+    <div class="login-footer">Ainda não tem conta? <a href="#" onclick="goTo('onboarding');return false">Cadastre-se grátis</a></div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════ ONBOARDING ══ -->
+<div id="view-onboarding" class="view">
+  <div class="ob-card">
+
+    <div class="ob-steps" id="obSteps">
+      <div class="step-dot active" id="dot1" style="width:8px"></div>
+      <div class="step-dot" id="dot2" style="width:8px"></div>
+      <div class="step-dot" id="dot3" style="width:8px"></div>
+    </div>
+
+    <!-- Step 1: Welcome -->
+    <div class="ob-step active" id="obStep1">
+      <div class="ob-icon">
+        <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+          <rect x="2" y="6" width="24" height="17" rx="3" stroke="#6366F1" stroke-width="1.8"/>
+          <path d="M2 11h24" stroke="#6366F1" stroke-width="1.8"/>
+          <path d="M6 16h4M6 19h6" stroke="#6366F1" stroke-width="1.6" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <div class="ob-title">Bem-vindo ao DuoPJ, Thiago!</div>
+      <div class="ob-desc">
+        Aqui você gerencia as finanças da sua <strong>empresa</strong> e da sua <strong>família</strong> em uma visão só.<br><br>
+        Vamos conectar suas contas bancárias em menos de 5 minutos. Tudo via <strong>Open Finance</strong> — regulamentado pelo Banco Central.
+      </div>
+      <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:24px">
+        <div style="display:flex;align-items:flex-start;gap:10px;padding:10px 14px;background:var(--gray-100);border-radius:8px">
+          <span style="font-size:16px">🏢</span>
+          <div><div style="font-size:13px;font-weight:600">Conta Jurídica</div><div style="font-size:12px;color:var(--gray-500)">Bancos e cartões PJ da empresa</div></div>
+        </div>
+        <div style="display:flex;align-items:flex-start;gap:10px;padding:10px 14px;background:var(--gray-100);border-radius:8px">
+          <span style="font-size:16px">👨‍💼</span>
+          <div><div style="font-size:13px;font-weight:600">Sua conta pessoal</div><div style="font-size:12px;color:var(--gray-500)">Seus bancos e cartões pessoais</div></div>
+        </div>
+        <div style="display:flex;align-items:flex-start;gap:10px;padding:10px 14px;background:var(--gray-100);border-radius:8px">
+          <span style="font-size:16px">👩‍💼</span>
+          <div><div style="font-size:13px;font-weight:600">Conta da Marina</div><div style="font-size:12px;color:var(--gray-500)">Bancos e cartões da sua cônjuge</div></div>
+        </div>
+      </div>
+      <button class="btn-ob" onclick="setObStep(2)">Conectar meus bancos →</button>
+    </div>
+
+    <!-- Step 2: Bank connection -->
+    <div class="ob-step" id="obStep2">
+      <div class="ob-icon">
+        <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+          <path d="M14 3L4 8h20L14 3Z" stroke="#6366F1" stroke-width="1.8" stroke-linejoin="round"/>
+          <path d="M6 8v13M10 8v13M14 8v13M18 8v13M22 8v13" stroke="#6366F1" stroke-width="1.6" stroke-linecap="round"/>
+          <path d="M4 21h20" stroke="#6366F1" stroke-width="1.8" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <div class="ob-title">Conecte seus bancos</div>
+      <div class="ob-desc">Selecione os bancos que deseja integrar. Seus dados são criptografados e nunca compartilhados.</div>
+
+      <div class="pluggy-note">
+        <div class="pluggy-dot"></div>
+        <span>Conexão segura via <strong>Pluggy</strong> — Homologado pelo Banco Central do Brasil</span>
+      </div>
+
+      <div class="bank-grid" id="bankGrid">
+        <div class="bank-item" onclick="toggleBank(this,'Nubank PJ','Conta PJ')" data-bank="Nubank PJ">
+          <div class="bank-logo" style="background:#820AD1">N</div>
+          <div class="bank-name">Nubank PJ</div>
+          <div class="bank-check" style="display:none">✓ Conectado</div>
+        </div>
+        <div class="bank-item" onclick="toggleBank(this,'Itaú PJ','Conta PJ')" data-bank="Itaú PJ">
+          <div class="bank-logo" style="background:#FF6200">I</div>
+          <div class="bank-name">Itaú PJ</div>
+          <div class="bank-check" style="display:none">✓ Conectado</div>
+        </div>
+        <div class="bank-item" onclick="toggleBank(this,'Inter','Conta PF')" data-bank="Inter">
+          <div class="bank-logo" style="background:#FF6B00">I</div>
+          <div class="bank-name">Inter (PF)</div>
+          <div class="bank-check" style="display:none">✓ Conectado</div>
+        </div>
+        <div class="bank-item" onclick="toggleBank(this,'XP Cartão','Cartão PF')" data-bank="XP">
+          <div class="bank-logo" style="background:#007A4D">XP</div>
+          <div class="bank-name">XP Cartão</div>
+          <div class="bank-check" style="display:none">✓ Conectado</div>
+        </div>
+        <div class="bank-item" onclick="toggleBank(this,'Nubank (Marina)','Conta PF')" data-bank="Nubank Marina">
+          <div class="bank-logo" style="background:#820AD1">N</div>
+          <div class="bank-name">Nubank (Marina)</div>
+          <div class="bank-check" style="display:none">✓ Conectado</div>
+        </div>
+        <div class="bank-item" onclick="toggleBank(this,'C6 Bank (Marina)','Cartão PF')" data-bank="C6">
+          <div class="bank-logo" style="background:#242424">C6</div>
+          <div class="bank-name">C6 (Marina)</div>
+          <div class="bank-check" style="display:none">✓ Conectado</div>
+        </div>
+      </div>
+
+      <div id="obConnectBtn" style="margin-bottom:8px">
+        <button class="btn-ob" id="continueBtn" onclick="setObStep(3)" disabled>
+          Continuar (<span id="bankCount">0</span> banco(s) selecionado(s))
+        </button>
+      </div>
+      <button class="btn-ob-ghost" onclick="goTo('app')">Pular por agora</button>
+    </div>
+
+    <!-- Step 3: Success -->
+    <div class="ob-step" id="obStep3">
+      <div class="success-icon">
+        <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+          <path d="M8 16l5.5 5.5L24 10" stroke="#10B981" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <div class="ob-title">Tudo conectado! 🎉</div>
+      <div class="ob-desc">Suas contas estão sincronizando. Já encontramos <strong>247 transações</strong> dos últimos 3 meses.</div>
+      <div class="connected-list" id="connectedList"></div>
+      <button class="btn-ob" onclick="goTo('app')">Ver meu painel →</button>
+    </div>
+
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════ APP ══ -->
+<div id="view-app" class="view">
+
+  <!-- SIDEBAR -->
+  <div class="sidebar">
+    <div class="sb-logo">
+      <div class="sb-logo-icon">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+          <path d="M2 8h4M10 8h4M8 2v4M8 10v4" stroke="white" stroke-width="1.6" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <div class="sb-logo-text">Duo<span>PJ</span></div>
+    </div>
+
+    <div class="sb-nav">
+      <div class="nav-label">Principal</div>
+      <button class="nav-item active" onclick="showPage('dashboard',this)">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+          <rect x="1" y="1" width="6" height="6" rx="1.5" stroke="currentColor" stroke-width="1.4"/>
+          <rect x="9" y="1" width="6" height="6" rx="1.5" stroke="currentColor" stroke-width="1.4"/>
+          <rect x="1" y="9" width="6" height="6" rx="1.5" stroke="currentColor" stroke-width="1.4"/>
+          <rect x="9" y="9" width="6" height="6" rx="1.5" stroke="currentColor" stroke-width="1.4"/>
+        </svg>
+        Dashboard
+      </button>
+      <button class="nav-item" onclick="showPage('transactions',this)">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+          <path d="M2 4h12M2 8h8M2 12h10" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+        </svg>
+        Transações
+      </button>
+      <button class="nav-item" onclick="showPage('forecast',this)">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+          <path d="M2 13L5 9l3 2 3-4 3-2" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M2 13h12" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+        </svg>
+        Previsão 6 meses
+      </button>
+      <button class="nav-item" onclick="showPage('cards',this)">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+          <rect x="1" y="3" width="14" height="10" rx="2" stroke="currentColor" stroke-width="1.4"/>
+          <path d="M1 7h14" stroke="currentColor" stroke-width="1.4"/>
+          <path d="M4 10.5h3" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+        </svg>
+        Cartões
+      </button>
+
+      <div class="nav-label" style="margin-top:12px">Configurações</div>
+      <button class="nav-item" onclick="alert('Em breve: Categorias, regras de IA e Open Finance')">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+          <circle cx="8" cy="8" r="2.5" stroke="currentColor" stroke-width="1.4"/>
+          <path d="M8 1v2M8 13v2M1 8h2M13 8h2M3.05 3.05l1.42 1.42M11.53 11.53l1.42 1.42M3.05 12.95l1.42-1.42M11.53 4.47l1.42-1.42" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>
+        </svg>
+        Configurações
+      </button>
+    </div>
+
+    <div class="sb-context">
+      <div class="ctx-label">Contexto</div>
+      <button class="ctx-tab active" onclick="setCtx('consolidado',this)">
+        <div class="ctx-dot" style="background:#6366F1"></div>Consolidado
+      </button>
+      <button class="ctx-tab" onclick="setCtx('empresa',this)">
+        <div class="ctx-dot" style="background:#10B981"></div>Empresa (PJ)
+      </button>
+      <button class="ctx-tab" onclick="setCtx('familia',this)">
+        <div class="ctx-dot" style="background:#F59E0B"></div>Família (PF)
+      </button>
+    </div>
+
+    <div class="sb-user">
+      <div class="user-av">T</div>
+      <div>
+        <div class="user-name">Thiago Lopes</div>
+        <div class="user-email">thiago@thlegal.com.br</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MAIN CONTENT -->
+  <div class="main-content">
+    <div class="topbar">
+      <div class="topbar-title" id="pageTitle">Dashboard</div>
+      <div class="month-nav">
+        <button class="mnav-btn" onclick="changeMonth(-1)">
+          <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M6.5 2L3.5 5l3 3" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+        </button>
+        <span id="currentMonth" style="min-width:90px;text-align:center">Jun 2026</span>
+        <button class="mnav-btn" onclick="changeMonth(1)">
+          <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M3.5 2L6.5 5l-3 3" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+        </button>
+      </div>
+      <div class="topbar-av">T</div>
+    </div>
+
+    <!-- ── DASHBOARD ── -->
+    <div class="page active" id="page-dashboard">
+
+      <div class="summary-grid">
+        <div class="s-card c-indigo">
+          <div class="card-label">Saldo Total</div>
+          <div class="card-value" id="totalBalance">R$ 78.400</div>
+          <div class="card-sub"><span class="up">▲ 13%</span> vs mês anterior</div>
+        </div>
+        <div class="s-card c-green">
+          <div class="card-label">Receitas do Mês</div>
+          <div class="card-value green" id="monthRevenue">R$ 35.200</div>
+          <div class="card-sub"><span class="up">▲ 4%</span> vs maio</div>
+        </div>
+        <div class="s-card c-red">
+          <div class="card-label">Despesas do Mês</div>
+          <div class="card-value red" id="monthExpense">R$ 24.800</div>
+          <div class="card-sub"><span class="down">▼ 8%</span> vs maio</div>
+        </div>
+        <div class="s-card c-amber">
+          <div class="card-label">Resultado Mensal</div>
+          <div class="card-value green" id="monthResult">+ R$ 10.400</div>
+          <div class="card-sub">Margem de <strong>29,5%</strong></div>
+        </div>
+      </div>
+
+      <!-- Context info bar -->
+      <div id="ctxBar" style="display:flex;align-items:center;gap:8px;padding:8px 14px;background:var(--indigo-light);border-radius:8px;margin-bottom:16px;font-size:12px;color:var(--indigo-dark)">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="5.5" stroke="#6366F1" stroke-width="1.4"/><path d="M7 6v4M7 4.5v.5" stroke="#6366F1" stroke-width="1.4" stroke-linecap="round"/></svg>
+        <span id="ctxBarText"><strong>Consolidado:</strong> empresa (R$ 36.100) + Thiago (R$ 28.100) + Marina (R$ 14.200)</span>
+      </div>
+
+      <!-- Person cards -->
+      <div class="person-grid">
+        <div class="p-card">
+          <div class="p-header">
+            <div class="p-av blue">T</div>
+            <div>
+              <div class="p-name">Thiago Lopes</div>
+              <div class="p-role">Titular · PF + PJ</div>
+            </div>
+          </div>
+          <div class="stat-row"><span class="stat-label">Saldo PF</span><span class="stat-val">R$ 28.100</span></div>
+          <div class="stat-row"><span class="stat-label">Receitas</span><span class="stat-val green">+ R$ 8.000</span></div>
+          <div class="stat-row"><span class="stat-label">Despesas</span><span class="stat-val red">− R$ 5.230</span></div>
+          <div class="stat-row"><span class="stat-label">Fatura aberta</span><span class="stat-val">R$ 3.847</span></div>
+          <div class="stat-bar"><div class="stat-bar-fill" style="width:65%;background:#6366F1"></div></div>
+          <div style="font-size:10px;color:var(--gray-400);margin-top:4px">65% do orçamento mensal utilizado</div>
+        </div>
+        <div class="p-card">
+          <div class="p-header">
+            <div class="p-av purple">M</div>
+            <div>
+              <div class="p-name">Marina Lopes</div>
+              <div class="p-role">Cônjuge · PF</div>
+            </div>
+          </div>
+          <div class="stat-row"><span class="stat-label">Saldo PF</span><span class="stat-val">R$ 14.200</span></div>
+          <div class="stat-row"><span class="stat-label">Receitas</span><span class="stat-val green">+ R$ 6.000</span></div>
+          <div class="stat-row"><span class="stat-label">Despesas</span><span class="stat-val red">− R$ 4.890</span></div>
+          <div class="stat-row"><span class="stat-label">Fatura aberta</span><span class="stat-val">R$ 2.934</span></div>
+          <div class="stat-bar"><div class="stat-bar-fill" style="width:81%;background:#8B5CF6"></div></div>
+          <div style="font-size:10px;color:var(--gray-400);margin-top:4px">81% do orçamento mensal utilizado</div>
+        </div>
+      </div>
+
+      <!-- Recent transactions -->
+      <div class="section-hdr">
+        <div class="section-title">Últimas Transações</div>
+        <button class="see-all" onclick="showPage('transactions',document.querySelectorAll('.nav-item')[1])">Ver todas →</button>
+      </div>
+      <div class="tx-card">
+        <div id="recentTxList"></div>
+      </div>
+
+    </div>
+
+    <!-- ── TRANSACTIONS ── -->
+    <div class="page" id="page-transactions">
+      <div class="filter-bar">
+        <div class="search-box">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="6" cy="6" r="4.5" stroke="#94A3B8" stroke-width="1.4"/><path d="M9.5 9.5l2.5 2.5" stroke="#94A3B8" stroke-width="1.4" stroke-linecap="round"/></svg>
+          <input type="text" placeholder="Buscar transação...">
+        </div>
+        <button class="f-chip active" onclick="toggleChip(this)">Todos</button>
+        <button class="f-chip" onclick="toggleChip(this)">Receitas</button>
+        <button class="f-chip" onclick="toggleChip(this)">Despesas</button>
+        <button class="f-chip" onclick="toggleChip(this)">PJ</button>
+        <button class="f-chip" onclick="toggleChip(this)">PF Thiago</button>
+        <button class="f-chip" onclick="toggleChip(this)">PF Marina</button>
+      </div>
+      <div class="tx-card" style="border-radius:0 0 12px 12px;border-top:none">
+        <div id="fullTxList"></div>
+      </div>
+    </div>
+
+    <!-- ── FORECAST ── -->
+    <div class="page" id="page-forecast">
+
+      <div class="alert-banner">
+        <div class="alert-icon">⚠️</div>
+        <div class="alert-text">
+          <strong>Atenção: Setembro e Outubro com margem estreita.</strong><br>
+          Com base nas recorrências identificadas, esses meses projetam resultado próximo de zero. Revise despesas variáveis ou antecipe receitas para garantir liquidez.
+        </div>
+      </div>
+
+      <div class="chart-card">
+        <div class="chart-hdr">
+          <div class="chart-title">Receitas × Despesas — Mai a Dez 2026</div>
+          <div class="chart-legend">
+            <div class="leg-item"><div class="leg-dot" style="background:#6366F1"></div>Receita</div>
+            <div class="leg-item"><div class="leg-dot" style="background:#EF4444"></div>Despesa</div>
+            <div class="leg-item">
+              <div style="width:20px;height:2px;border-top:2px dashed #10B981"></div>
+              Resultado
+            </div>
+          </div>
+        </div>
+        <svg id="forecastChart" viewBox="0 0 720 260" style="width:100%;height:auto"></svg>
+      </div>
+
+      <div class="forecast-table-card ft">
+        <table>
+          <thead>
+            <tr>
+              <th>Mês</th>
+              <th>Receitas</th>
+              <th>Despesas</th>
+              <th>Resultado</th>
+              <th>Saldo acum.</th>
+            </tr>
+          </thead>
+          <tbody id="forecastTbody"></tbody>
+        </table>
+      </div>
+
+    </div>
+
+    <!-- ── CARDS ── -->
+    <div class="page" id="page-cards">
+      <div class="section-hdr mb-4">
+        <div class="section-title">Cartões de Crédito</div>
+        <div style="font-size:12px;color:var(--gray-500)">Gastos lançados no mês do vencimento da fatura</div>
+      </div>
+
+      <div class="cc-grid">
+
+        <!-- XP Thiago -->
+        <div class="cc-wrap">
+          <div class="cc-visual cc-grad-1">
+            <div class="cc-shimmer"></div>
+            <div class="cc-network">VISA</div>
+            <div class="cc-bank-name">XP Investimentos</div>
+            <div class="cc-number">•••• •••• •••• 4821</div>
+            <div class="cc-holder">Thiago Lopes</div>
+          </div>
+          <div class="cc-body">
+            <div class="cc-row">
+              <span class="cc-label">Fatura atual</span>
+              <span class="inv-tag current">Vence 10/Jul</span>
+            </div>
+            <div class="cc-amount-big">R$ 3.847,23</div>
+            <div class="cc-due">Vencimento: 10 de Julho · 26 dias</div>
+            <div class="cc-prog-bar"><div class="cc-prog-fill" style="width:34%;background:#6366F1"></div></div>
+            <div class="cc-limit-txt">Limite usado: R$ 5.077 / R$ 15.000</div>
+            <div class="cc-divider"></div>
+            <div class="cc-row">
+              <span class="cc-label">Próxima fatura</span>
+              <span class="inv-tag next">Vence 10/Ago</span>
+            </div>
+            <div class="cc-val">R$ 1.230,00 (parcial)</div>
+          </div>
+        </div>
+
+        <!-- C6 Marina -->
+        <div class="cc-wrap">
+          <div class="cc-visual cc-grad-2">
+            <div class="cc-shimmer"></div>
+            <div class="cc-network">MASTER</div>
+            <div class="cc-bank-name">C6 Bank</div>
+            <div class="cc-number">•••• •••• •••• 7734</div>
+            <div class="cc-holder">Marina Lopes</div>
+          </div>
+          <div class="cc-body">
+            <div class="cc-row">
+              <span class="cc-label">Fatura atual</span>
+              <span class="inv-tag current">Vence 15/Jul</span>
+            </div>
+            <div class="cc-amount-big">R$ 2.934,56</div>
+            <div class="cc-due">Vencimento: 15 de Julho · 31 dias</div>
+            <div class="cc-prog-bar"><div class="cc-prog-fill" style="width:38%;background:#8B5CF6"></div></div>
+            <div class="cc-limit-txt">Limite usado: R$ 3.782 / R$ 10.000</div>
+            <div class="cc-divider"></div>
+            <div class="cc-row">
+              <span class="cc-label">Próxima fatura</span>
+              <span class="inv-tag next">Vence 15/Ago</span>
+            </div>
+            <div class="cc-val">R$ 847,00 (parcial)</div>
+          </div>
+        </div>
+
+        <!-- Nubank PJ -->
+        <div class="cc-wrap">
+          <div class="cc-visual cc-grad-3">
+            <div class="cc-shimmer"></div>
+            <div class="cc-network">VISA</div>
+            <div class="cc-bank-name">Nubank Empresarial</div>
+            <div class="cc-number">•••• •••• •••• 0192</div>
+            <div class="cc-holder">TH Legal Consultoria</div>
+          </div>
+          <div class="cc-body">
+            <div class="cc-row">
+              <span class="cc-label">Fatura atual</span>
+              <span class="inv-tag current">Vence 22/Jul</span>
+            </div>
+            <div class="cc-amount-big">R$ 4.812,00</div>
+            <div class="cc-due">Vencimento: 22 de Julho · 38 dias</div>
+            <div class="cc-prog-bar"><div class="cc-prog-fill" style="width:35%;background:#10B981"></div></div>
+            <div class="cc-limit-txt">Limite usado: R$ 6.912 / R$ 20.000</div>
+            <div class="cc-divider"></div>
+            <div class="cc-row">
+              <span class="cc-label">Próxima fatura</span>
+              <span class="inv-tag next">Vence 22/Ago</span>
+            </div>
+            <div class="cc-val">R$ 2.100,00 (parcial)</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Invoice transactions -->
+      <div class="section-hdr mb-4">
+        <div class="section-title">Transações na fatura atual — XP (vence 10/Jul)</div>
+      </div>
+      <div class="section-card">
+        <div id="cardTxList"></div>
+      </div>
+    </div>
+
+  </div><!-- /main-content -->
+</div><!-- /view-app -->
+
+<script>
+// ─── DATA ────────────────────────────────────────────────────────────
+const transactions = [
+  {id:1, name:'Pró-labore Thiago', cat:'Renda PF', icon:'💼', bg:'#EEF2FF', acc:'Inter (PF)', accColor:'#FF6B00', amount:8000, type:'credit', date:'01/06', ai:true, person:'thiago'},
+  {id:2, name:'Pró-labore Marina', cat:'Renda PF', icon:'💼', bg:'#F5F3FF', acc:'Nubank PF', accColor:'#820AD1', amount:6000, type:'credit', date:'01/06', ai:true, person:'marina'},
+  {id:3, name:'Acme Corp — Consultoria', cat:'Receita PJ', icon:'🏢', bg:'#D1FAE5', acc:'Nubank PJ', accColor:'#820AD1', amount:15000, type:'credit', date:'03/06', ai:true, person:'pj'},
+  {id:4, name:'Beta Ventures — Projeto', cat:'Receita PJ', icon:'🏢', bg:'#D1FAE5', acc:'Nubank PJ', accColor:'#820AD1', amount:13500, type:'credit', date:'05/06', ai:true, person:'pj'},
+  {id:5, name:'Aluguel Escritório', cat:'Moradia PJ', icon:'🏠', bg:'#FEE2E2', acc:'Nubank PJ', accColor:'#820AD1', amount:3200, type:'debit', date:'05/06', ai:true, person:'pj'},
+  {id:6, name:'Supermercado Extra', cat:'Alimentação', icon:'🛒', bg:'#FEF3C7', acc:'C6 Marina', accColor:'#242424', amount:847, type:'debit', date:'06/06', ai:true, person:'marina'},
+  {id:7, name:'Posto Shell', cat:'Transporte', icon:'⛽', bg:'#FEE2E2', acc:'Inter PF', accColor:'#FF6B00', amount:312, type:'debit', date:'07/06', ai:true, person:'thiago'},
+  {id:8, name:'Amazon AWS', cat:'Software/SaaS', icon:'☁️', bg:'#EEF2FF', acc:'Nubank PJ', accColor:'#820AD1', amount:1847, type:'debit', date:'08/06', ai:true, person:'pj'},
+  {id:9, name:'Fogo de Chão', cat:'Alimentação', icon:'🍖', bg:'#FEF3C7', acc:'XP Cartão', accColor:'#007A4D', amount:423, type:'debit', date:'09/06', ai:false, person:'thiago'},
+  {id:10, name:'Farmácia Droga Raia', cat:'Saúde', icon:'💊', bg:'#D1FAE5', acc:'C6 Marina', accColor:'#242424', amount:189, type:'debit', date:'10/06', ai:true, person:'marina'},
+  {id:11, name:'Netflix', cat:'Streaming', icon:'🎬', bg:'#FEE2E2', acc:'C6 Marina', accColor:'#242424', amount:55.9, type:'debit', date:'12/06', ai:true, person:'marina'},
+  {id:12, name:'Spotify', cat:'Streaming', icon:'🎵', bg:'#D1FAE5', acc:'XP Cartão', accColor:'#007A4D', amount:21.9, type:'debit', date:'12/06', ai:true, person:'thiago'},
+  {id:13, name:'Financiamento Carro', cat:'Transporte', icon:'🚗', bg:'#EEF2FF', acc:'Inter PF', accColor:'#FF6B00', amount:1890, type:'debit', date:'15/06', ai:true, person:'thiago'},
+  {id:14, name:'Plano de Saúde Família', cat:'Saúde', icon:'🏥', bg:'#D1FAE5', acc:'Inter PF', accColor:'#FF6B00', amount:1240, type:'debit', date:'15/06', ai:true, person:'thiago'},
+  {id:15, name:'Contador / BPO Fiscal', cat:'Serviços PJ', icon:'📊', bg:'#EEF2FF', acc:'Nubank PJ', accColor:'#820AD1', amount:2800, type:'debit', date:'16/06', ai:true, person:'pj'},
+  {id:16, name:'Salesforce CRM', cat:'Software/SaaS', icon:'☁️', bg:'#EEF2FF', acc:'Nubank PJ', accColor:'#820AD1', amount:1200, type:'debit', date:'18/06', ai:true, person:'pj'},
+  {id:17, name:'Academia Smart Fit', cat:'Saúde', icon:'💪', bg:'#D1FAE5', acc:'C6 Marina', accColor:'#242424', amount:99.9, type:'debit', date:'20/06', ai:true, person:'marina'},
+  {id:18, name:'Mercado Pago transferência', cat:'Renda PJ', icon:'💰', bg:'#D1FAE5', acc:'Nubank PJ', accColor:'#820AD1', amount:2700, type:'credit', date:'21/06', ai:true, person:'pj'},
+];
+
+const cardTxs = [
+  {name:'Uber Eats', cat:'Alimentação', icon:'🍕', amount:67.9, date:'01/06'},
+  {name:'Mercado Livre', cat:'Compras', icon:'📦', amount:234.5, date:'03/06'},
+  {name:'Shell Box Combustível', cat:'Transporte', icon:'⛽', amount:312.0, date:'07/06'},
+  {name:'iFood — Jantar', cat:'Alimentação', icon:'🥗', amount:89.9, date:'08/06'},
+  {name:'Fogo de Chão', cat:'Restaurante', icon:'🍖', amount:423.0, date:'09/06'},
+  {name:'Spotify Premium', cat:'Streaming', icon:'🎵', amount:21.9, date:'12/06'},
+  {name:'Farmácia Pacheco', cat:'Saúde', icon:'💊', amount:156.3, date:'14/06'},
+  {name:'Posto Ipiranga', cat:'Transporte', icon:'⛽', amount:287.4, date:'17/06'},
+  {name:'Cinema CineMark', cat:'Lazer', icon:'🎬', amount:89.0, date:'19/06'},
+  {name:'Amazon — Livros', cat:'Educação', icon:'📚', amount:143.6, date:'21/06'},
+];
+
+const forecastData = [
+  {month:'Mai',receita:38000,despesa:28000,projected:false},
+  {month:'Jun',receita:35200,despesa:24800,projected:false},
+  {month:'Jul',receita:36000,despesa:25000,projected:true,tight:false},
+  {month:'Ago',receita:34000,despesa:26000,projected:true,tight:false},
+  {month:'Set',receita:30000,despesa:29000,projected:true,tight:true},
+  {month:'Out',receita:32000,despesa:31500,projected:true,tight:true},
+  {month:'Nov',receita:40000,despesa:28000,projected:true,tight:false},
+  {month:'Dez',receita:52000,despesa:35000,projected:true,tight:false},
+];
+
+const months = ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
+let currentMonthIdx = 5; // June
+let connectedBanks = [];
+
+// ─── ANIMATION HELPERS ────────────────────────────────────────────────
+const { animate, stagger } = Motion;
+
+function fadeIn(el, delay = 0) {
+  if (!el) return;
+  animate(el, { opacity: [0, 1], y: [18, 0] }, { duration: 0.45, delay, easing: [0.25, 0.1, 0.25, 1] });
+}
+
+function fadeInList(selector, baseDelay = 0) {
+  const els = document.querySelectorAll(selector);
+  els.forEach((el, i) => {
+    animate(el, { opacity: [0, 1], y: [14, 0] }, { duration: 0.38, delay: baseDelay + i * 0.06, easing: [0.25, 0.1, 0.25, 1] });
+  });
+}
+
+function scaleIn(el, delay = 0) {
+  if (!el) return;
+  animate(el, { opacity: [0, 1], scale: [0.92, 1] }, { duration: 0.4, delay, easing: [0.34, 1.56, 0.64, 1] });
+}
+
+// ─── NAVIGATION ─────────────────────────────────────────────────────
+function goTo(view) {
+  document.querySelectorAll('.view').forEach(v => {
+    v.classList.remove('active');
+    v.style.display = '';
+  });
+  const el = document.getElementById('view-' + view);
+  el.classList.add('active');
+  if (view === 'app') {
+    renderAll();
+    // Animate sidebar items
+    setTimeout(() => {
+      fadeInList('.sb-logo', 0);
+      fadeInList('.nav-item', 0.1);
+      fadeInList('.ctx-tab', 0.3);
+      fadeInList('.sb-user', 0.45);
+    }, 50);
+  }
+  if (view === 'login') {
+    setTimeout(() => scaleIn(document.querySelector('.login-card'), 0.05), 50);
+  }
+  if (view === 'onboarding') {
+    setTimeout(() => scaleIn(document.querySelector('.ob-card'), 0.05), 50);
+  }
+}
+
+function showPage(page, btn) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  const pageEl = document.getElementById('page-' + page);
+  pageEl.classList.add('active');
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  if (btn) btn.classList.add('active');
+  const titles = {dashboard:'Dashboard',transactions:'Transações',forecast:'Previsão 6 Meses',cards:'Cartões de Crédito'};
+  document.getElementById('pageTitle').textContent = titles[page] || page;
+
+  // Animate page content
+  animate(pageEl, { opacity: [0, 1], x: [12, 0] }, { duration: 0.32, easing: [0.25, 0.1, 0.25, 1] });
+
+  setTimeout(() => {
+    if (page === 'dashboard') {
+      fadeInList('.s-card', 0);
+      fadeInList('.p-card', 0.18);
+      fadeInList('.tx-row', 0.3);
+    }
+    if (page === 'transactions') {
+      fadeInList('#page-transactions .tx-row', 0);
+    }
+    if (page === 'forecast') {
+      fadeInList('.alert-banner', 0);
+      fadeIn(document.querySelector('.chart-card'), 0.1);
+      fadeIn(document.querySelector('.forecast-table-card'), 0.25);
+      animateChartBars();
+    }
+    if (page === 'cards') {
+      fadeInList('.cc-wrap', 0);
+      fadeInList('#page-cards .tx-row', 0.3);
+    }
+  }, 40);
+}
+
+// ─── ONBOARDING ──────────────────────────────────────────────────────
+let obStep = 1;
+
+function setObStep(step) {
+  document.querySelectorAll('.ob-step').forEach(s => s.classList.remove('active'));
+  document.getElementById('obStep' + step).classList.add('active');
+  const dots = document.querySelectorAll('.step-dot');
+  dots.forEach((d, i) => {
+    d.classList.remove('active','done');
+    d.style.width = '8px';
+    if (i + 1 < step) d.classList.add('done');
+    else if (i + 1 === step) { d.classList.add('active'); d.style.width = '24px'; }
+  });
+  obStep = step;
+  if (step === 3) buildConnectedList();
+}
+
+function toggleBank(el, name, type) {
+  const wasConnected = el.classList.contains('connected');
+  el.classList.toggle('connected');
+  const check = el.querySelector('.bank-check');
+  if (wasConnected) {
+    check.style.display = 'none';
+    connectedBanks = connectedBanks.filter(b => b.name !== name);
+  } else {
+    check.style.display = 'block';
+    connectedBanks.push({name, type});
+  }
+  const count = connectedBanks.length;
+  document.getElementById('bankCount').textContent = count;
+  document.getElementById('continueBtn').disabled = count < 1;
+}
+
+function buildConnectedList() {
+  const list = document.getElementById('connectedList');
+  const colors = {'Nubank PJ':'#820AD1','Itaú PJ':'#FF6200','Inter':'#FF6B00','XP Cartão':'#007A4D','Nubank (Marina)':'#820AD1','C6 Bank (Marina)':'#242424'};
+  const abbr = {'Nubank PJ':'N','Itaú PJ':'I','Inter':'I','XP Cartão':'XP','Nubank (Marina)':'N','C6 Bank (Marina)':'C6'};
+  if (connectedBanks.length === 0) {
+    connectedBanks = [{name:'Nubank PJ',type:'Conta PJ'},{name:'Inter',type:'Conta PF'},{name:'XP Cartão',type:'Cartão PF'},{name:'Nubank (Marina)',type:'Conta PF'},{name:'C6 Bank (Marina)',type:'Cartão PF'}];
+  }
+  list.innerHTML = connectedBanks.map(b => `
+    <div class="connected-item">
+      <div class="connected-item-icon" style="background:${colors[b.name]||'#6366F1'}">${abbr[b.name]||b.name[0]}</div>
+      <div>
+        <div class="connected-item-name">${b.name}</div>
+        <div class="connected-item-type">${b.type}</div>
+      </div>
+      <div class="connected-check">✓</div>
+    </div>
+  `).join('');
+}
+
+// ─── CONTEXT ─────────────────────────────────────────────────────────
+let currentCtx = 'consolidado';
+
+const ctxData = {
+  consolidado:{balance:'R$ 78.400',revenue:'R$ 35.200',expense:'R$ 24.800',result:'+ R$ 10.400',bar:'<strong>Consolidado:</strong> empresa (R$ 36.100) + Thiago (R$ 28.100) + Marina (R$ 14.200)'},
+  empresa:{balance:'R$ 36.100',revenue:'R$ 31.200',expense:'R$ 10.847',result:'+ R$ 20.353',bar:'<strong>Empresa (PJ):</strong> Nubank PJ + Itaú PJ — receitas de clientes'},
+  familia:{balance:'R$ 42.300',revenue:'R$ 14.000',expense:'R$ 13.953',result:'+ R$ 47',bar:'<strong>Família (PF):</strong> Thiago (R$ 28.100) + Marina (R$ 14.200) — inclui pró-labore'},
+};
+
+function setCtx(ctx, btn) {
+  currentCtx = ctx;
+  document.querySelectorAll('.ctx-tab').forEach(t => t.classList.remove('active'));
+  if (btn) btn.classList.add('active');
+  const d = ctxData[ctx];
+  document.getElementById('totalBalance').textContent = d.balance;
+  document.getElementById('monthRevenue').textContent = d.revenue;
+  document.getElementById('monthExpense').textContent = d.expense;
+  document.getElementById('monthResult').textContent = d.result;
+  document.getElementById('ctxBarText').innerHTML = d.bar;
+}
+
+// ─── MONTH NAV ────────────────────────────────────────────────────────
+function changeMonth(dir) {
+  currentMonthIdx = Math.max(0, Math.min(11, currentMonthIdx + dir));
+  document.getElementById('currentMonth').textContent = months[currentMonthIdx] + ' 2026';
+}
+
+// ─── CHIP TOGGLE ─────────────────────────────────────────────────────
+function toggleChip(el) {
+  document.querySelectorAll('.f-chip').forEach(c => c.classList.remove('active'));
+  el.classList.add('active');
+}
+
+// ─── RENDER TRANSACTIONS ─────────────────────────────────────────────
+function renderTx(containerId, list) {
+  const el = document.getElementById(containerId);
+  el.innerHTML = list.map(tx => `
+    <div class="tx-row">
+      <div class="tx-icon" style="background:${tx.bg}">${tx.icon}</div>
+      <div class="tx-info">
+        <div class="tx-name">${tx.name}</div>
+        <div class="tx-meta">
+          <span class="cat-badge">${tx.cat}</span>
+          ${tx.ai ? '<span class="ai-badge">IA</span>' : ''}
+          <span class="acc-badge" style="background:${tx.accColor}22;color:${tx.accColor}">${tx.acc}</span>
+        </div>
+      </div>
+      <div class="tx-right">
+        <div class="tx-amount ${tx.type}">${tx.type==='credit'?'+ ':'− '}R$ ${tx.amount.toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2})}</div>
+        <div class="tx-date">${tx.date}/26</div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function renderCardTx() {
+  const el = document.getElementById('cardTxList');
+  el.innerHTML = cardTxs.map(tx => `
+    <div class="tx-row">
+      <div class="tx-icon" style="background:#EEF2FF">${tx.icon}</div>
+      <div class="tx-info">
+        <div class="tx-name">${tx.name}</div>
+        <div class="tx-meta"><span class="cat-badge">${tx.cat}</span><span class="ai-badge">IA</span></div>
+      </div>
+      <div class="tx-right">
+        <div class="tx-amount debit">− R$ ${tx.amount.toLocaleString('pt-BR',{minimumFractionDigits:2})}</div>
+        <div class="tx-date">${tx.date}/26</div>
+      </div>
+    </div>
+  `).join('');
+}
+
+// ─── RENDER FORECAST CHART ────────────────────────────────────────────
+function renderForecastChart() {
+  const svg = document.getElementById('forecastChart');
+  const W = 720, H = 260;
+  const ML = 62, MR = 20, MT = 20, MB = 40;
+  const plotW = W - ML - MR;
+  const plotH = H - MT - MB;
+  const n = forecastData.length;
+  const slotW = plotW / n;
+  const barW = 22;
+  const maxVal = 55000;
+  const yScale = plotH / maxVal;
+
+  let paths = '';
+
+  // Grid lines
+  const gridVals = [0, 10000, 20000, 30000, 40000, 50000];
+  gridVals.forEach(v => {
+    const y = MT + plotH - v * yScale;
+    paths += `<line x1="${ML}" y1="${y}" x2="${W-MR}" y2="${y}" stroke="#E2E8F0" stroke-width="1"/>`;
+    paths += `<text x="${ML-6}" y="${y+4}" text-anchor="end" font-size="10" fill="#94A3B8">${v===0?'0':v/1000+'k'}</text>`;
+  });
+
+  // Divider between historical and projected (after Jun = idx 1)
+  const divX = ML + slotW * 2;
+  paths += `<line x1="${divX}" y1="${MT}" x2="${divX}" y2="${MT+plotH}" stroke="#CBD5E1" stroke-width="1" stroke-dasharray="4,3"/>`;
+  paths += `<text x="${divX+6}" y="${MT+14}" font-size="10" fill="#94A3B8">▶ Projeção</text>`;
+
+  // Result line points
+  const linePoints = [];
+
+  forecastData.forEach((d, i) => {
+    const cx = ML + slotW * i + slotW / 2;
+    const rH = d.receita * yScale;
+    const eH = d.despesa * yScale;
+    const rY = MT + plotH - rH;
+    const eY = MT + plotH - eH;
+
+    const recColor = d.projected ? '#A5B4FC' : '#6366F1';
+    const expColor = d.projected ? '#FCA5A5' : '#EF4444';
+
+    // Receita bar
+    paths += `<rect x="${cx - barW - 2}" y="${rY}" width="${barW}" height="${rH}" rx="3" fill="${recColor}" opacity="${d.tight?'.7':'1'}"/>`;
+    // Despesa bar
+    paths += `<rect x="${cx + 2}" y="${eY}" width="${barW}" height="${eH}" rx="3" fill="${expColor}" opacity="${d.tight?'.7':'1'}"/>`;
+
+    // Month label
+    paths += `<text x="${cx}" y="${H-8}" text-anchor="middle" font-size="10" fill="${d.projected?'#94A3B8':'#475569'}" font-weight="${d.projected?'400':'500'}">${d.month}</text>`;
+
+    // Tight month indicator
+    if (d.tight) {
+      paths += `<text x="${cx}" y="${MT-2}" text-anchor="middle" font-size="10" fill="#F59E0B">⚠</text>`;
+    }
+
+    const resultado = d.receita - d.despesa;
+    const resultY = MT + plotH - resultado * yScale;
+    linePoints.push(`${cx},${resultY}`);
+  });
+
+  // Result line
+  paths += `<polyline points="${linePoints.join(' ')}" fill="none" stroke="#10B981" stroke-width="2" stroke-dasharray="5,3" stroke-linecap="round" stroke-linejoin="round"/>`;
+
+  // Result dots
+  forecastData.forEach((d, i) => {
+    const cx = ML + slotW * i + slotW / 2;
+    const resultado = d.receita - d.despesa;
+    const resultY = MT + plotH - resultado * yScale;
+    paths += `<circle cx="${cx}" cy="${resultY}" r="3.5" fill="white" stroke="#10B981" stroke-width="2"/>`;
+    if (d.tight) {
+      paths += `<circle cx="${cx}" cy="${resultY}" r="3.5" fill="white" stroke="#F59E0B" stroke-width="2"/>`;
+    }
+  });
+
+  // X axis
+  paths += `<line x1="${ML}" y1="${MT+plotH}" x2="${W-MR}" y2="${MT+plotH}" stroke="#CBD5E1" stroke-width="1"/>`;
+  // Y axis
+  paths += `<line x1="${ML}" y1="${MT}" x2="${ML}" y2="${MT+plotH}" stroke="#CBD5E1" stroke-width="1"/>`;
+
+  svg.innerHTML = paths;
+}
+
+// ─── RENDER FORECAST TABLE ────────────────────────────────────────────
+function renderForecastTable() {
+  let cumBalance = 68000;
+  const tbody = document.getElementById('forecastTbody');
+  tbody.innerHTML = forecastData.map(d => {
+    const result = d.receita - d.despesa;
+    cumBalance += result;
+    const rowClass = d.tight ? 'tight-month projected' : d.projected ? 'projected' : '';
+    return `
+      <tr class="${rowClass}">
+        <td>
+          ${d.month}/26
+          ${d.projected ? '<span class="proj-badge">Projeção</span>' : ''}
+          ${d.tight ? '<span class="warn-badge">Atenção</span>' : ''}
+        </td>
+        <td style="color:#10B981;font-weight:600">R$ ${d.receita.toLocaleString('pt-BR')}</td>
+        <td style="color:#EF4444;font-weight:600">R$ ${d.despesa.toLocaleString('pt-BR')}</td>
+        <td style="color:${result < 3000 ? '#F59E0B' : '#10B981'};font-weight:600">+ R$ ${result.toLocaleString('pt-BR')}</td>
+        <td style="font-weight:600">R$ ${cumBalance.toLocaleString('pt-BR')}</td>
+      </tr>
+    `;
+  }).join('');
+}
+
+// ─── ANIMATE CHART BARS ──────────────────────────────────────────────
+function animateChartBars() {
+  const rects = document.querySelectorAll('#forecastChart rect');
+  rects.forEach((rect, i) => {
+    const origH = parseFloat(rect.getAttribute('height'));
+    const origY = parseFloat(rect.getAttribute('y'));
+    rect.setAttribute('height', '0');
+    rect.setAttribute('y', String(origY + origH));
+    animate(rect, { height: [0, origH], y: [origY + origH, origY] },
+      { duration: 0.55, delay: i * 0.04, easing: [0.34, 1.2, 0.64, 1] });
+  });
+}
+
+// ─── RENDER ALL ──────────────────────────────────────────────────────
+function renderAll() {
+  renderTx('recentTxList', transactions.slice(0, 8));
+  renderTx('fullTxList', transactions);
+  renderCardTx();
+  renderForecastChart();
+  renderForecastTable();
+
+  // Dashboard initial animations
+  setTimeout(() => {
+    fadeInList('.s-card', 0);
+    fadeInList('.p-card', 0.2);
+    fadeInList('#recentTxList .tx-row', 0.35);
+  }, 80);
+}
+
+// ─── COUNTER ANIMATION ───────────────────────────────────────────────
+function animateCounter(el, target, prefix = 'R$ ', suffix = '') {
+  if (!el) return;
+  const isNeg = target < 0;
+  const abs = Math.abs(target);
+  animate((t) => {
+    const val = Math.round(abs * t);
+    el.textContent = (isNeg ? '− ' : prefix) + val.toLocaleString('pt-BR') + suffix;
+  }, { duration: 1, easing: [0.16, 1, 0.3, 1] });
+}
+
+// ─── INIT ─────────────────────────────────────────────────────────────
+window.addEventListener('load', () => {
+  goTo('login');
+});
+</script>
+</body>
+</html>

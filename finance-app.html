@@ -7,6 +7,7 @@
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💳</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/motion@latest/dist/motion.js"></script>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
@@ -312,6 +313,10 @@ input{font-family:inherit}
 .text-sm{font-size:12px}
 .font-medium{font-weight:500}
 .font-semibold{font-weight:600}
+
+/* ── ANIMATION HELPERS ── */
+.will-animate{opacity:0}
+.bar-animate rect{transform-origin:bottom center}
 
 @media(max-width:900px){
   .sidebar{display:none}
@@ -858,6 +863,26 @@ const months = ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov
 let currentMonthIdx = 5; // June
 let connectedBanks = [];
 
+// ─── ANIMATION HELPERS ────────────────────────────────────────────────
+const { animate, stagger } = Motion;
+
+function fadeIn(el, delay = 0) {
+  if (!el) return;
+  animate(el, { opacity: [0, 1], y: [18, 0] }, { duration: 0.45, delay, easing: [0.25, 0.1, 0.25, 1] });
+}
+
+function fadeInList(selector, baseDelay = 0) {
+  const els = document.querySelectorAll(selector);
+  els.forEach((el, i) => {
+    animate(el, { opacity: [0, 1], y: [14, 0] }, { duration: 0.38, delay: baseDelay + i * 0.06, easing: [0.25, 0.1, 0.25, 1] });
+  });
+}
+
+function scaleIn(el, delay = 0) {
+  if (!el) return;
+  animate(el, { opacity: [0, 1], scale: [0.92, 1] }, { duration: 0.4, delay, easing: [0.34, 1.56, 0.64, 1] });
+}
+
 // ─── NAVIGATION ─────────────────────────────────────────────────────
 function goTo(view) {
   document.querySelectorAll('.view').forEach(v => {
@@ -868,16 +893,54 @@ function goTo(view) {
   el.classList.add('active');
   if (view === 'app') {
     renderAll();
+    // Animate sidebar items
+    setTimeout(() => {
+      fadeInList('.sb-logo', 0);
+      fadeInList('.nav-item', 0.1);
+      fadeInList('.ctx-tab', 0.3);
+      fadeInList('.sb-user', 0.45);
+    }, 50);
+  }
+  if (view === 'login') {
+    setTimeout(() => scaleIn(document.querySelector('.login-card'), 0.05), 50);
+  }
+  if (view === 'onboarding') {
+    setTimeout(() => scaleIn(document.querySelector('.ob-card'), 0.05), 50);
   }
 }
 
 function showPage(page, btn) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-  document.getElementById('page-' + page).classList.add('active');
+  const pageEl = document.getElementById('page-' + page);
+  pageEl.classList.add('active');
   document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
   if (btn) btn.classList.add('active');
   const titles = {dashboard:'Dashboard',transactions:'Transações',forecast:'Previsão 6 Meses',cards:'Cartões de Crédito'};
   document.getElementById('pageTitle').textContent = titles[page] || page;
+
+  // Animate page content
+  animate(pageEl, { opacity: [0, 1], x: [12, 0] }, { duration: 0.32, easing: [0.25, 0.1, 0.25, 1] });
+
+  setTimeout(() => {
+    if (page === 'dashboard') {
+      fadeInList('.s-card', 0);
+      fadeInList('.p-card', 0.18);
+      fadeInList('.tx-row', 0.3);
+    }
+    if (page === 'transactions') {
+      fadeInList('#page-transactions .tx-row', 0);
+    }
+    if (page === 'forecast') {
+      fadeInList('.alert-banner', 0);
+      fadeIn(document.querySelector('.chart-card'), 0.1);
+      fadeIn(document.querySelector('.forecast-table-card'), 0.25);
+      animateChartBars();
+    }
+    if (page === 'cards') {
+      fadeInList('.cc-wrap', 0);
+      fadeInList('#page-cards .tx-row', 0.3);
+    }
+  }, 40);
 }
 
 // ─── ONBOARDING ──────────────────────────────────────────────────────
@@ -1109,6 +1172,19 @@ function renderForecastTable() {
   }).join('');
 }
 
+// ─── ANIMATE CHART BARS ──────────────────────────────────────────────
+function animateChartBars() {
+  const rects = document.querySelectorAll('#forecastChart rect');
+  rects.forEach((rect, i) => {
+    const origH = parseFloat(rect.getAttribute('height'));
+    const origY = parseFloat(rect.getAttribute('y'));
+    rect.setAttribute('height', '0');
+    rect.setAttribute('y', String(origY + origH));
+    animate(rect, { height: [0, origH], y: [origY + origH, origY] },
+      { duration: 0.55, delay: i * 0.04, easing: [0.34, 1.2, 0.64, 1] });
+  });
+}
+
 // ─── RENDER ALL ──────────────────────────────────────────────────────
 function renderAll() {
   renderTx('recentTxList', transactions.slice(0, 8));
@@ -1116,6 +1192,24 @@ function renderAll() {
   renderCardTx();
   renderForecastChart();
   renderForecastTable();
+
+  // Dashboard initial animations
+  setTimeout(() => {
+    fadeInList('.s-card', 0);
+    fadeInList('.p-card', 0.2);
+    fadeInList('#recentTxList .tx-row', 0.35);
+  }, 80);
+}
+
+// ─── COUNTER ANIMATION ───────────────────────────────────────────────
+function animateCounter(el, target, prefix = 'R$ ', suffix = '') {
+  if (!el) return;
+  const isNeg = target < 0;
+  const abs = Math.abs(target);
+  animate((t) => {
+    const val = Math.round(abs * t);
+    el.textContent = (isNeg ? '− ' : prefix) + val.toLocaleString('pt-BR') + suffix;
+  }, { duration: 1, easing: [0.16, 1, 0.3, 1] });
 }
 
 // ─── INIT ─────────────────────────────────────────────────────────────

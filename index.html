@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Allan Lopes — Estrategista de Sistemas</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;1,300;1,400&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #0a0a0a;
+      color: #ede9e2;
+      font-weight: 300;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── REVEAL ANIMATION ── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.95s cubic-bezier(0.16, 1, 0.3, 1),
+                  transform 0.95s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ── DIVIDER ── */
+    .divider {
+      text-align: center;
+      color: rgba(237,233,226,0.18);
+      font-size: 14px;
+      letter-spacing: 0.55em;
+      padding: 0 24px;
+    }
+
+    /* ── SECTION LABEL ── */
+    .section-label {
+      display: block;
+      font-size: 11px;
+      font-weight: 400;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: rgba(237,233,226,0.3);
+      margin-bottom: 20px;
+    }
+
+    /* ── CTA BUTTON ── */
+    .btn {
+      display: inline-block;
+      border: 1px solid rgba(237,233,226,0.35);
+      color: #ede9e2;
+      text-decoration: none;
+      padding: 17px 48px;
+      font-family: 'Inter', sans-serif;
+      font-size: 13px;
+      font-weight: 400;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      transition: background 0.3s, border-color 0.3s, color 0.3s, transform 0.25s;
+      cursor: pointer;
+      background: transparent;
+    }
+    .btn:hover {
+      background: #ede9e2;
+      color: #0a0a0a;
+      border-color: #ede9e2;
+      transform: translateY(-2px);
+    }
+
+    /* ═══════════════════════════════
+       HERO
+    ═══════════════════════════════ */
+    .hero {
+      padding: 160px 32px 130px;
+      text-align: center;
+      max-width: 960px;
+      margin: 0 auto;
+    }
+
+    .hero-headline {
+      font-size: clamp(38px, 6.5vw, 82px);
+      font-weight: 300;
+      line-height: 1.08;
+      letter-spacing: -0.025em;
+      margin-bottom: 80px;
+    }
+    .hero-headline em { font-style: italic; }
+
+    .hero-stats {
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      gap: 80px;
+      margin-bottom: 80px;
+      flex-wrap: wrap;
+    }
+
+    .hero-stat {}
+
+    .hero-stat-val {
+      display: block;
+      font-size: clamp(30px, 4vw, 50px);
+      font-weight: 300;
+      letter-spacing: -0.02em;
+      color: #ede9e2;
+    }
+
+    .hero-stat-lbl {
+      display: block;
+      font-size: 12px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(237,233,226,0.38);
+      margin-top: 8px;
+    }
+
+    .hero-tagline {
+      font-size: clamp(18px, 2.2vw, 26px);
+      font-style: italic;
+      font-weight: 300;
+      color: rgba(237,233,226,0.45);
+      margin-bottom: 72px;
+      letter-spacing: 0.01em;
+    }
+
+    /* ═══════════════════════════════
+       GENERIC SECTION WRAPPER
+    ═══════════════════════════════ */
+    .section {
+      padding: 120px 32px;
+    }
+    .section-inner {
+      max-width: 680px;
+      margin: 0 auto;
+    }
+    .section-inner.wide {
+      max-width: 780px;
+    }
+
+    .section-h2 {
+      font-size: clamp(30px, 4.5vw, 58px);
+      font-weight: 300;
+      line-height: 1.12;
+      letter-spacing: -0.02em;
+      margin-bottom: 52px;
+    }
+    .section-h2 em { font-style: italic; }
+
+    .section-p {
+      font-size: clamp(16px, 1.8vw, 19px);
+      line-height: 1.9;
+      color: rgba(237,233,226,0.65);
+      margin-bottom: 28px;
+    }
+    .section-p strong {
+      color: #ede9e2;
+      font-weight: 400;
+    }
+    .section-p em { font-style: italic; }
+
+    .isolated-line {
+      font-size: clamp(16px, 1.8vw, 19px);
+      line-height: 1.9;
+      color: rgba(237,233,226,0.65);
+      margin-bottom: 0;
+    }
+
+    /* ═══════════════════════════════
+       A PROVA — COUNT-UP GRID
+    ═══════════════════════════════ */
+    .proof-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 56px 48px;
+      margin-bottom: 72px;
+    }
+
+    .proof-val {
+      display: block;
+      font-size: clamp(34px, 4.5vw, 52px);
+      font-weight: 300;
+      letter-spacing: -0.02em;
+      color: #ede9e2;
+      margin-bottom: 10px;
+    }
+
+    .proof-lbl {
+      font-size: 13px;
+      line-height: 1.6;
+      color: rgba(237,233,226,0.45);
+      font-weight: 300;
+    }
+
+    /* ═══════════════════════════════
+       MANIFESTO
+    ═══════════════════════════════ */
+    .manifesto {
+      padding: 130px 32px;
+      text-align: center;
+    }
+    .manifesto-inner {
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .m-line {
+      font-size: clamp(22px, 3vw, 36px);
+      font-weight: 300;
+      letter-spacing: -0.015em;
+      line-height: 1.15;
+      margin-bottom: 40px;
+    }
+    .m-line.accent {
+      color: #ede9e2;
+    }
+    .m-line.muted {
+      color: rgba(237,233,226,0.38);
+      font-size: clamp(15px, 1.8vw, 20px);
+    }
+    .m-gap { height: 56px; }
+    .m-break { height: 80px; }
+
+    .manifesto-p {
+      font-size: clamp(16px, 1.8vw, 20px);
+      line-height: 1.95;
+      color: rgba(237,233,226,0.6);
+      margin-bottom: 32px;
+    }
+
+    /* ═══════════════════════════════
+       COMO FUNCIONA
+    ═══════════════════════════════ */
+    .steps-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 60px 80px;
+    }
+
+    .step-num {
+      display: block;
+      font-size: 11px;
+      font-weight: 400;
+      letter-spacing: 0.22em;
+      color: rgba(237,233,226,0.25);
+      margin-bottom: 18px;
+    }
+
+    .step-title {
+      font-size: clamp(18px, 2.2vw, 26px);
+      font-weight: 400;
+      letter-spacing: -0.01em;
+      margin-bottom: 14px;
+      color: #ede9e2;
+    }
+
+    .step-text {
+      font-size: 15px;
+      line-height: 1.85;
+      color: rgba(237,233,226,0.5);
+      font-weight: 300;
+    }
+
+    /* ═══════════════════════════════
+       CLOSING (A PORTA)
+    ═══════════════════════════════ */
+    .closing {
+      padding: 160px 32px 200px;
+      text-align: center;
+    }
+    .closing-inner {
+      max-width: 700px;
+      margin: 0 auto;
+    }
+
+    .closing-h2 {
+      font-size: clamp(32px, 5vw, 68px);
+      font-weight: 300;
+      line-height: 1.1;
+      letter-spacing: -0.025em;
+      margin-bottom: 64px;
+    }
+
+    .closing-p {
+      font-size: clamp(16px, 1.8vw, 20px);
+      line-height: 1.95;
+      color: rgba(237,233,226,0.58);
+      margin-bottom: 28px;
+    }
+
+    .closing-declaration {
+      font-size: clamp(14px, 1.5vw, 17px);
+      color: rgba(237,233,226,0.35);
+      font-style: italic;
+      margin-bottom: 64px;
+    }
+
+    /* ═══════════════════════════════
+       RESPONSIVE
+    ═══════════════════════════════ */
+    @media (max-width: 768px) {
+      .hero { padding: 100px 24px 80px; }
+      .hero-stats { gap: 40px; }
+      .section, .manifesto, .closing { padding: 80px 24px; }
+      .proof-grid { grid-template-columns: repeat(2, 1fr); gap: 44px 32px; }
+      .steps-grid { grid-template-columns: 1fr; gap: 48px; }
+    }
+
+    @media (max-width: 480px) {
+      .hero { padding: 80px 20px 64px; }
+      .section, .manifesto, .closing { padding: 64px 20px; }
+      .proof-grid { grid-template-columns: 1fr; gap: 36px; }
+      .hero-stats { gap: 32px; }
+      .section-inner, .section-inner.wide { padding: 0; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ════════════════════════════════════════
+     HERO
+════════════════════════════════════════ -->
+<section class="hero">
+  <h1 class="hero-headline reveal">
+    Eu não opero empresas.<br>
+    Eu <em>construo</em> os sistemas<br>
+    que fazem elas crescerem.
+  </h1>
+
+  <div class="hero-stats reveal" style="transition-delay:0.15s">
+    <div class="hero-stat">
+      <span class="hero-stat-val">R$60M+</span>
+      <span class="hero-stat-lbl">Movimentados</span>
+    </div>
+    <div class="hero-stat">
+      <span class="hero-stat-val">100+</span>
+      <span class="hero-stat-lbl">Automações</span>
+    </div>
+    <div class="hero-stat">
+      <span class="hero-stat-val">10+</span>
+      <span class="hero-stat-lbl">Mercados</span>
+    </div>
+  </div>
+
+  <p class="hero-tagline reveal" style="transition-delay:0.25s">
+    E você provavelmente nunca ouviu meu nome.
+  </p>
+
+  <a href="#agendar-call" class="btn reveal" style="transition-delay:0.35s">
+    Agendar Call
+  </a>
+</section>
+
+<!-- divider -->
+<div class="divider reveal">···</div>
+
+<!-- ════════════════════════════════════════
+     01 — QUEM ESTÁ POR TRÁS
+════════════════════════════════════════ -->
+<section class="section" id="quem">
+  <div class="section-inner">
+    <span class="section-label reveal">01 — Quem está por trás</span>
+
+    <h2 class="section-h2 reveal">
+      Sou o estrategista que aparece<br>
+      quando o crescimento para<br>
+      de <em>responder</em>.
+    </h2>
+
+    <p class="section-p reveal">
+      Você não vai ver meu nome estampado no resultado. E esse é o ponto.
+    </p>
+
+    <p class="section-p reveal">
+      Enquanto o mercado discute anúncio, criativo e tendência da semana, eu estou numa camada diferente: como o sistema inteiro funciona.
+    </p>
+
+    <p class="section-p reveal">
+      <strong>Aquisição. Conversão. Retenção. Operação. Decisão.</strong>
+    </p>
+
+    <p class="section-p reveal">
+      Eu não crio mais atividade. Crio mais resultado com menos gente dependendo de mim para ele continuar.
+    </p>
+  </div>
+</section>
+
+<!-- divider -->
+<div class="divider reveal">···</div>
+
+<!-- ════════════════════════════════════════
+     02 — A PROVA
+════════════════════════════════════════ -->
+<section class="section" id="prova">
+  <div class="section-inner wide">
+    <span class="section-label reveal">02 — A prova</span>
+
+    <div class="proof-grid">
+      <div class="reveal">
+        <span class="proof-val" data-target="60" data-prefix="R$" data-suffix="M+">R$0M+</span>
+        <span class="proof-lbl">Movimentados</span>
+      </div>
+      <div class="reveal" style="transition-delay:0.08s">
+        <span class="proof-val" data-target="100" data-suffix="+">0+</span>
+        <span class="proof-lbl">Automações implementadas</span>
+      </div>
+      <div class="reveal" style="transition-delay:0.16s">
+        <span class="proof-val" data-target="20" data-suffix="+">0+</span>
+        <span class="proof-lbl">Operações comerciais estruturadas</span>
+      </div>
+      <div class="reveal" style="transition-delay:0.24s">
+        <span class="proof-val" data-target="12" data-suffix="+">0+</span>
+        <span class="proof-lbl">Produtos digitais validados e escalados</span>
+      </div>
+      <div class="reveal" style="transition-delay:0.32s">
+        <span class="proof-val" data-target="8" data-suffix="+">0+</span>
+        <span class="proof-lbl">E-commerces com marca estruturada</span>
+      </div>
+      <div class="reveal" style="transition-delay:0.40s">
+        <span class="proof-val" data-target="15" data-suffix="+">0+</span>
+        <span class="proof-lbl">Sistemas de IA implementados</span>
+      </div>
+    </div>
+
+    <p class="section-p reveal">
+      Diferentes mercados. Mesmo princípio.
+    </p>
+
+    <p class="section-p reveal" style="font-style:italic; color: rgba(237,233,226,0.4);">
+      Parece muito pra alguém que você nunca viu.<br>É exatamente esse o ponto.
+    </p>
+  </div>
+</section>
+
+<!-- divider -->
+<div class="divider reveal">···</div>
+
+<!-- ════════════════════════════════════════
+     03 — A MAIOR MUDANÇA DOS PRÓXIMOS ANOS
+════════════════════════════════════════ -->
+<section class="section" id="mudanca">
+  <div class="section-inner">
+    <span class="section-label reveal">03 — A maior mudança dos próximos anos</span>
+
+    <h2 class="section-h2 reveal">
+      Empresas não estão competindo<br>
+      por clientes. Estão competindo<br>
+      por <em>eficiência</em>.
+    </h2>
+
+    <p class="section-p reveal">
+      Durante décadas, crescimento significou contratar mais pessoas. Mais vendedores. Mais atendimento. Mais gestores. Mais operação.
+    </p>
+
+    <p class="section-p reveal">
+      Agora existe uma alternativa: sistemas de aquisição, automação de qualificação e conversão, inteligência artificial em toda etapa do processo.
+    </p>
+
+    <p class="section-p reveal">
+      <strong>Quem entendeu isso primeiro não está competindo por clientes. Está construindo a infraestrutura que vai dominar o mercado.</strong>
+    </p>
+
+    <p class="section-p reveal" style="font-style:italic">
+      Quem ignora, some.
+    </p>
+  </div>
+</section>
+
+<!-- divider -->
+<div class="divider reveal">···</div>
+
+<!-- ════════════════════════════════════════
+     04 — O MANIFESTO
+════════════════════════════════════════ -->
+<section class="manifesto" id="manifesto">
+  <div class="manifesto-inner">
+    <span class="section-label reveal" style="text-align:center; display:block;">04 — O manifesto</span>
+
+    <div class="m-gap"></div>
+
+    <p class="m-line accent reveal">O ativo não é o tráfego.</p>
+    <p class="m-line accent reveal" style="transition-delay:0.1s">O ativo não é o CRM.</p>
+    <p class="m-line accent reveal" style="transition-delay:0.2s">O ativo não é a IA.</p>
+    <p class="m-line accent reveal" style="transition-delay:0.3s; margin-bottom:0;font-style:italic">O ativo é o sistema.</p>
+
+    <div class="m-break"></div>
+
+    <p class="manifesto-p reveal">
+      Porque tráfego muda. Ferramentas mudam. Plataformas mudam.
+    </p>
+
+    <p class="manifesto-p reveal">
+      Mas empresas que operam sobre sistemas continuam crescendo independentemente da ferramenta da vez.
+    </p>
+
+    <div class="m-gap"></div>
+
+    <p class="m-line muted reveal">
+      Toda empresa de alto desempenho parece diferente por fora.
+    </p>
+    <p class="m-line muted reveal" style="transition-delay:0.12s">
+      Mas por dentro elas compartilham a mesma característica:
+    </p>
+    <p class="m-line accent reveal" style="transition-delay:0.24s; font-style:italic">
+      clareza operacional.
+    </p>
+  </div>
+</section>
+
+<!-- divider -->
+<div class="divider reveal">···</div>
+
+<!-- ════════════════════════════════════════
+     05 — COMO FUNCIONA
+════════════════════════════════════════ -->
+<section class="section" id="como-funciona">
+  <div class="section-inner wide">
+    <span class="section-label reveal">05 — Como funciona</span>
+
+    <h2 class="section-h2 reveal" style="margin-bottom:72px">
+      Quatro movimentos.<br>Um sistema.
+    </h2>
+
+    <div class="steps-grid">
+      <div class="reveal">
+        <span class="step-num">01</span>
+        <p class="step-title">Mapear o gargalo</p>
+        <p class="step-text">Toda empresa cresce até encontrar uma restrição. Meu trabalho é encontrá-la antes que ela custe mais do que deveria.</p>
+      </div>
+      <div class="reveal" style="transition-delay:0.1s">
+        <span class="step-num">02</span>
+        <p class="step-title">Desenhar o sistema</p>
+        <p class="step-text">Processos. Tecnologia. Automação. Fluxos. Cada peça no lugar certo, com a menor dependência humana possível.</p>
+      </div>
+      <div class="reveal" style="transition-delay:0.2s">
+        <span class="step-num">03</span>
+        <p class="step-title">Eliminar dependência</p>
+        <p class="step-text">Menos esforço manual. Menos retrabalho. Menos improviso. A operação continua quando você não está olhando.</p>
+      </div>
+      <div class="reveal" style="transition-delay:0.3s">
+        <span class="step-num">04</span>
+        <p class="step-title">Criar alavancagem</p>
+        <p class="step-text">Mais resultado por decisão tomada. Mais resultado por pessoa. Mais resultado por operação.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- divider -->
+<div class="divider reveal">···</div>
+
+<!-- ════════════════════════════════════════
+     06 — POR QUE AGORA
+════════════════════════════════════════ -->
+<section class="section" id="por-que-agora">
+  <div class="section-inner">
+    <span class="section-label reveal">06 — Por que agora</span>
+
+    <h2 class="section-h2 reveal">
+      A distância entre empresas<br>
+      eficientes e ineficientes<br>
+      está <em>aumentando</em>.
+    </h2>
+
+    <p class="section-p reveal">
+      A inteligência artificial acelerou isso. Automação acelerou isso. Software acelerou isso.
+    </p>
+
+    <p class="section-p reveal">
+      Os próximos anos não serão definidos por quem trabalha mais. Mas por quem constrói sistemas melhores.
+    </p>
+
+    <p class="section-p reveal">
+      <strong>Quem constrói o sistema agora define o padrão.</strong>
+    </p>
+
+    <p class="section-p reveal" style="font-style:italic">
+      Quem espera, vai operar dentro do padrão de outro.
+    </p>
+  </div>
+</section>
+
+<!-- divider -->
+<div class="divider reveal">···</div>
+
+<!-- ════════════════════════════════════════
+     07 — POR QUE ME OUVIR
+════════════════════════════════════════ -->
+<section class="section" id="por-que-eu">
+  <div class="section-inner">
+    <span class="section-label reveal">07 — Por que me ouvir</span>
+
+    <h2 class="section-h2 reveal">
+      Eu não peço confiança.<br>
+      Mostro o <em>resultado</em>.
+    </h2>
+
+    <p class="section-p reveal">
+      R$60 milhões movimentados. Centenas de automações. Operações inteiras redesenhadas.
+    </p>
+
+    <p class="section-p reveal">
+      <strong>Isso não é discurso. É histórico.</strong>
+    </p>
+
+    <p class="section-p reveal">
+      Não vendo produtividade. Não vendo atalho. Não vendo promessa.
+    </p>
+
+    <p class="section-p reveal">
+      Eu opero sistemas. Sempre foi essa a única coisa que me interessou: <em>negócio, tecnologia, mercado, decisão, alavancagem.</em>
+    </p>
+  </div>
+</section>
+
+<!-- divider -->
+<div class="divider reveal">···</div>
+
+<!-- ════════════════════════════════════════
+     08 — A PORTA
+════════════════════════════════════════ -->
+<section class="closing" id="agendar-call">
+  <div class="closing-inner">
+    <span class="section-label reveal" style="display:block; text-align:center;">08 — A porta</span>
+
+    <h2 class="closing-h2 reveal">
+      O sistema<br>
+      já está <em>rodando</em>.
+    </h2>
+
+    <p class="closing-p reveal">
+      A pergunta é se você entra agora.
+    </p>
+
+    <p class="closing-p reveal">
+      Alguém no seu mercado já está construindo o que você ainda está pensando em construir.
+    </p>
+
+    <p class="closing-p reveal">
+      A diferença entre essa pessoa e o resto do mercado não é talento. É <em>tempo</em>.
+    </p>
+
+    <p class="closing-declaration reveal">
+      Não vendo fórmula. Não vendo hack. Não vendo promessa.<br>
+      Compartilho o sistema com quem está construindo pra valer,<br>não com quem está esperando o momento perfeito.
+    </p>
+
+    <a href="https://calendly.com/allanjhone77" class="btn reveal">
+      Agendar Call
+    </a>
+  </div>
+</section>
+
+<script>
+  // ── REVEAL ON SCROLL ──
+  const reveals = document.querySelectorAll('.reveal');
+  const revealObs = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        revealObs.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.08 });
+  reveals.forEach(el => revealObs.observe(el));
+
+  // Trigger above-fold immediately
+  requestAnimationFrame(() => {
+    reveals.forEach(el => {
+      if (el.getBoundingClientRect().top < window.innerHeight) {
+        el.classList.add('visible');
+      }
+    });
+  });
+
+  // ── COUNT-UP ──
+  function animateCount(el) {
+    const target  = parseFloat(el.dataset.target);
+    const prefix  = el.dataset.prefix  || '';
+    const suffix  = el.dataset.suffix  || '';
+    const dur     = 2200;
+    const start   = performance.now();
+
+    const tick = (now) => {
+      const p       = Math.min((now - start) / dur, 1);
+      const eased   = 1 - Math.pow(1 - p, 4);
+      const current = Math.floor(eased * target);
+      el.textContent = prefix + current + suffix;
+      if (p < 1) requestAnimationFrame(tick);
+      else el.textContent = prefix + target + suffix;
+    };
+    requestAnimationFrame(tick);
+  }
+
+  const countObs = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        animateCount(entry.target);
+        countObs.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.25 });
+
+  document.querySelectorAll('[data-target]').forEach(el => countObs.observe(el));
+</script>
+
+</body>
+</html>
